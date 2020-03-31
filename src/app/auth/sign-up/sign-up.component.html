@@ -1,0 +1,28 @@
+<mat-card>
+    <mat-card-title>Sing up</mat-card-title>
+    <mat-card-content>
+        <form class = "form"[formGroup]="form" (submit) = "register()">
+            <mat-form-field class="full-fields">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Ex. pat@example.com" formControlName="email">
+                <mat-error *ngIf="validationFormControl('email')">
+                    Please enter a valid email address
+                  </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-fields">
+                <input type="password" matInput placeholder="Password" formControlName="password">
+                <mat-error *ngIf="validationFormControl('password')">
+                    Please enter a password
+                  </mat-error>
+            </mat-form-field>
+            <mat-card-actions>
+                <div class="social-networks">
+                    <button  mat-raised-button color = "primary"  class="facebook"></button>
+                    <button  (click) = "loginGoogle()" mat-raised-button color = "primary"class="google"></button>
+                    <button  mat-raised-button color = "primary" class="vk"></button>
+                </div>
+                <button type="submit" class = "btn-sign_up" mat-raised-button color = "primary">Sing up</button>
+            </mat-card-actions>
+        </form>
+    </mat-card-content>
+</mat-card>

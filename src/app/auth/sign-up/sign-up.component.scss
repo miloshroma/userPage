@@ -1,0 +1,45 @@
+:host {
+    flex-grow: 1;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+mat-card{
+    min-width: 400px;
+    text-align: center;
+}
+mat-card-title{
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+}
+.facebook::before{
+    font-family: 'icomoon';
+    content: "\f09a";
+}
+.google::before{
+    font-family: 'icomoon';
+    content: "\f0d5";
+}
+.vk::before{
+    font-family: 'icomoon';
+    content: "\f189";
+}
+.mat-card-actions .mat-raised-button{
+    margin:0;
+}
+.google{
+    margin:0 10px !important
+}
+.btn-sign_up{
+    margin-top: 1.5rem !important;
+    padding: .3rem 3rem;
+    font-size: 1.1rem;
+}
+mat-form-field{
+    font-size: 1.2rem;
+}

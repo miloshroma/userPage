@@ -1,0 +1,27 @@
+:host {
+    flex-grow: 1;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+mat-card{
+    min-width: 400px;
+    text-align: center;
+}
+.btn-sign_in{
+    margin-top: 1.5rem !important;
+    padding: .3rem 3rem;
+    font-size: 1.1rem;
+}
+mat-card-title{
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+}
+mat-form-field{
+    font-size: 1.2rem;
+}
