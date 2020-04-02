@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import {map} from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { auth } from 'firebase';
+import * as firebase from 'firebase/app';
 
 export interface UserData{
   id?: string,
@@ -12,29 +10,53 @@ export interface UserData{
   password: string,
 }
 
-// interface RegisterUser{
-//   name:string
-// }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
  
+  error:string = '';
 
-  //static url = 'https://user-page-c0a04.firebaseio.com/';
-  // constructor(private http: HttpClient) { }
-  constructor(private router:Router, private afAuth:AngularFireAuth){}
+  constructor(private router:Router,private afAuth:AngularFireAuth){}
 
-  login(){
-    this.afAuth.auth.signInWithRedirect(new auth.GoogleAuthProvider());
+  // loginGoogle() {
+  //   this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
+  // }
+  googleAuth() {
+    return this.authLogin(new auth.GoogleAuthProvider());
+  }  
+
+  loginFb() {
+    return this.authLogin(new auth.FacebookAuthProvider());
   }
+
+  gitHubAuth(){
+    return this.authLogin(new auth.GithubAuthProvider());
+  }
+
+  authLogin(provider) {
+    return this.afAuth.auth.signInWithPopup(provider)
+    .then((success) => {
+        console.log('You have been successfully logged in!')
+        this.router.navigateByUrl('/');
+    }).catch((error) => {
+        console.log(error)
+    })
+  }
+
   getLoggerInUser() {
     return this.afAuth.authState;
   }
 
   logout(){
-    this.afAuth.auth.signOut();
+    return this.afAuth.auth.signOut()
+    .then((success) => {
+      this.router.navigateByUrl('/auth');
+    })
+    .catch((error)=>{
+      console.log('Something is wrong:', error.message);
+    });
   }
 
   signUp(email: string, password: string) {
@@ -43,9 +65,11 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then(res => {
         console.log('Successfully signed up!', res);
+        this.router.navigateByUrl('/');
       })
       .catch(error => {
         console.log('Something is wrong:', error.message);
+        this.error = error;
       });    
   }
 
@@ -55,28 +79,10 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then(res => {
         console.log('Successfully signed in!');
+        this.router.navigateByUrl('/');
       })
       .catch(err => {
         console.log('Something is wrong:',err.message);
       });
   }
-
-  // register(data: UserData):Observable<UserData>{
-  //   return this.http
-  //   .post<RegisterUser>(`${AuthService.url}.json`,data)
-  //   .pipe(map(responce => {
-  //     console.log('Responce:',responce);
-  //     return {...data,id:responce.name};
-  //   }));
-  // } 
-
-  // login():Observable<UserData[]>{
-  //   return this.http.get<UserData[]>(`${AuthService.url}.json`)
-  //   .pipe(map(tasks => {
-  //     if(!tasks){
-  //       return [];
-  //     }
-  //     return Object.keys(tasks).map(key => ({...tasks[key], id:key}));
-  //   }))
-  // }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService, UserData } from '../auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 export class SingInComponent implements OnInit {
 
   form:FormGroup;
+  error: string;
+  
+
   constructor(private formBuilder: FormBuilder,
     private authService:AuthService,
     private router: Router ) {}
@@ -44,19 +47,16 @@ export class SingInComponent implements OnInit {
       return;
     }
 
-    this.authService.signIn(this.form.get('email').value,this.form.get('password').value)
-    .then(success =>{
-      this.router.navigateByUrl('/');
-    });
-// this.authService.login()
-//     .subscribe(responce => {
-//     Array.from(responce).forEach((resp)=>{
-//       if(resp.email == this.form.get('email').value && resp.password == this.form.get('password').value){
-//         this.router.navigateByUrl('/');
-//       }
-//     });
+    const data: UserData = {
+      email: this.form.get('email').value,
+      password: this.form.get('password').value,
+    }
 
-//     },err => console.error(err));    
+    this.authService.signIn(data.email, data.password);
+
+    if(this.authService.error.length == 0) {
+      this.error = `Please check the spelling of your login and password.`
+    }
    }
 
 }

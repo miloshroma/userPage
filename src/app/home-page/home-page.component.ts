@@ -8,10 +8,16 @@ import { AuthService } from '../auth/auth.service';
 })
 export class HomePageComponent implements OnInit {
 
+  user:firebase.User;
+
   constructor(private authSevice:AuthService) { }
 
-  ngOnInit(): void {
 
+  ngOnInit(): void {
+    this.authSevice.getLoggerInUser()
+    .subscribe(user => {
+      this.user = user;
+    });
   }
 
 }

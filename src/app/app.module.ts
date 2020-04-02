@@ -12,6 +12,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 
 
@@ -19,6 +20,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
   declarations: [
     AppComponent,
     HomePageComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,

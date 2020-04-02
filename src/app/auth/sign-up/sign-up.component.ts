@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService, UserData } from '../auth.service';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class SignUpComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     public authService:AuthService,
-    private router:Router, ) {}
+    private router:Router,
+    private auth:AngularFireAuth ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -56,27 +58,20 @@ export class SignUpComponent implements OnInit {
       password: this.form.get('password').value,
     }
 
-
-    this.authService.signUp(data.email,data.password)
-    .then(success =>{
-      this.router.navigateByUrl('/');
-    })
-    .catch( err => console.log(err));
-    
-    // this.authService.register(data)
-    // .subscribe(() => this.router.navigateByUrl('/'), 
-    // err => console.error(err));
+    this.authService.signUp(data.email,data.password);
    }
 
    
   loginGoogle() {
-    this.authService.login();
-
-    if(this.user){
-      this.router.navigateByUrl('/');
-    }
+    this.authService.googleAuth();
   }
 
+  loginFb(){
+    this.authService.loginFb();
+  }
 
-
+  loginGitHub(){
+    this.authService.gitHubAuth();
+  }
+  
 }
