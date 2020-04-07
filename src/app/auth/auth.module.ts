@@ -11,10 +11,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './auth.service';
-// import { AngularFireModule } from 'angularfire2';
-// import { environment } from 'src/environments/environment';
-// import { AngularFireAuthModule } from "@angular/fire/auth";
-
 
 @NgModule({
   declarations: [SingInComponent, SignUpComponent,],
@@ -29,9 +25,6 @@ import { AuthService } from './auth.service';
       
     ReactiveFormsModule,
     
-   // AngularFireAuthModule,
-
-    //AngularFireModule.initializeApp(environment.firebaseConfig),
 
     HttpClientModule,
   ],

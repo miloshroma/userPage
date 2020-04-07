@@ -13,7 +13,13 @@ import { AngularFireModule } from 'angularfire2';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-
+import {MatCardModule} from '@angular/material/card';
+import {MatMenuModule} from '@angular/material/menu';
+import { NewQuestionComponent } from './new-question/new-question.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -21,6 +27,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     AppComponent,
     HomePageComponent,
     ToolbarComponent,
+    NewQuestionComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +36,14 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    MatCardModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+
+    ReactiveFormsModule,
+    
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,                  

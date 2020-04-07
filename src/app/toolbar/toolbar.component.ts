@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ToolbarComponent implements OnInit {
 
+  click:boolean = true;
   user:firebase.User;
 
   constructor(private authService: AuthService,
@@ -23,4 +24,9 @@ export class ToolbarComponent implements OnInit {
   logOut() {
     this.authService.logout();
   }
+
+  clickAddQuestion() {
+    this.click = false;
+  }
+
 }

@@ -1,3 +1,20 @@
-.flex-grow{
+.flex-grow {
     flex-grow: 1;
+}
+.user-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+    display: inline-block;
+    margin-right: 5px;;
+}
+.add-question {
+    background-color: #fff;
+    font-size: 1rem;
+    margin-right: 15px;
+}
+mat-toolbar{
+    min-height: 64px;
+}
+.addQuestion{
+    display: none;
 }

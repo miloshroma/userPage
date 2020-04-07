@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { auth } from 'firebase';
-import * as firebase from 'firebase/app';
 
 export interface UserData{
   id?: string,

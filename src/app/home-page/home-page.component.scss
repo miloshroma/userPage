@@ -1,3 +1,11 @@
 .user-name{
     padding: 1.5rem;
 }
+.user-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+.lower-menu {
+    display: flex;
+    justify-content: space-between;
+}
