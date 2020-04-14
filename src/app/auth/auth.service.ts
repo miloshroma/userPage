@@ -19,9 +19,6 @@ export class AuthService {
 
   constructor(private router:Router,private afAuth:AngularFireAuth){}
 
-  // loginGoogle() {
-  //   this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
-  // }
   googleAuth() {
     return this.authLogin(new auth.GoogleAuthProvider());
   }  
@@ -38,20 +35,16 @@ export class AuthService {
     return this.afAuth.auth.signInWithPopup(provider)
     .then((success) => {
         console.log('You have been successfully logged in!')
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('');
     }).catch((error) => {
         console.log(error)
     })
   }
 
-  getLoggerInUser() {
-    return this.afAuth.authState;
-  }
-
   logout(){
     return this.afAuth.auth.signOut()
     .then((success) => {
-      this.router.navigateByUrl('/auth');
+      this.router.navigateByUrl('/auth/sign-in');
     })
     .catch((error)=>{
       console.log('Something is wrong:', error.message);
@@ -64,7 +57,7 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then(res => {
         console.log('Successfully signed up!', res);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('');
       })
       .catch(error => {
         console.log('Something is wrong:', error.message);
@@ -76,12 +69,16 @@ export class AuthService {
     return this.afAuth
       .auth
       .signInWithEmailAndPassword(email, password)
-      .then(res => {
-        console.log('Successfully signed in!');
-        this.router.navigateByUrl('/');
-      })
-      .catch(err => {
-        console.log('Something is wrong:',err.message);
-      });
+      // .then(res => {
+      //   console.log('Successfully signed in!');
+      //   this.router.navigateByUrl('/');
+      // })
+      // .catch(err => {
+      //   console.log('Something is wrong:',err.message);
+      // });
+  }
+
+  getLoggerInUser() {
+    return this.afAuth.authState;
   }
 }

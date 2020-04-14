@@ -15,8 +15,15 @@
                     Please enter a password
                   </mat-error>
             </mat-form-field>
-            <mat-error>{{error}}</mat-error>
-            <button type="submit" class = "btn-sign_in" mat-raised-button color = "primary">Sing in</button>
+            <mat-card-actions>
+                <div class="social-networks">
+                    <button  mat-raised-button color = "primary"  class="facebook"></button>
+                    <button   mat-raised-button color = "primary"class="google"></button>
+                    <button  mat-raised-button color = "primary" class="github"></button>
+                </div>
+                <mat-error class = "error-type">{{error}}</mat-error>
+                <button   type="submit" class = "btn-sign_in" mat-raised-button color = "primary">Sing in</button>
+            </mat-card-actions>
         </form>
     </mat-card-content>
 </mat-card>

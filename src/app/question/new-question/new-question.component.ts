@@ -1,5 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder,Validators, FormArray } from '@angular/forms';
+import { QuestionService, Question } from '../questions.service';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
+
 
 @Component({
   selector: 'app-new-question',
@@ -9,12 +13,16 @@ import { FormGroup, FormBuilder,Validators, FormArray } from '@angular/forms';
 export class NewQuestionComponent implements OnInit {
 
   form:FormGroup;
+  click:boolean;
   
   togs:string [] = ['tog1','tog2','tog3'];
   selectedTogsValue = [];
   togsError:boolean = true;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+    private questionService:QuestionService,
+    private router:Router,
+    private afAuth:AngularFireAuth) { }
 
 
   ngOnInit(): void {
@@ -63,13 +71,21 @@ export class NewQuestionComponent implements OnInit {
 
   addQuestion() {
 
-    if(this.form.valid && !this.togsError){
-      console.log(this.form.value);
+    const question:Question = {
+      title: this.form.get('title').value,
+      text: this.form.get('text').value,
+      togs:this.form.get('allTogs').value,
+      date: this.questionService.date.value.format('DD-MM-YYYY'),
+      name: this.afAuth.auth.currentUser.email,
     }
-    
-    // console.log(this.form.get('tog2').value);
-    // console.log(this.form.get('tog3').value);
 
+    if(this.form.valid && !this.togsError){
+      console.log(this.form.get('allTogs').value);
+        this.questionService.showQuestion(question)
+      .subscribe(question => {
+        this.router.navigateByUrl('');
+      },err => console.error(err));
+    }
   }
 
 }

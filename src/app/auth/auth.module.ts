@@ -11,6 +11,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './auth.service';
+import { HomeGuard } from '../home.guard';
 
 @NgModule({
   declarations: [SingInComponent, SignUpComponent,],
@@ -29,7 +30,7 @@ import { AuthService } from './auth.service';
     HttpClientModule,
   ],
   providers:[
-    AuthService
+    AuthService,
   ]
 })
 export class AuthModule { }

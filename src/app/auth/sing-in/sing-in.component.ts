@@ -13,7 +13,7 @@ export class SingInComponent implements OnInit {
   form:FormGroup;
   error: string;
   
-
+  
   constructor(private formBuilder: FormBuilder,
     private authService:AuthService,
     private router: Router ) {}
@@ -52,11 +52,26 @@ export class SingInComponent implements OnInit {
       password: this.form.get('password').value,
     }
 
-    this.authService.signIn(data.email, data.password);
+    this.authService.signIn(data.email, data.password)
+    .then(res => {
+      console.log('Successfully signed in!');
+      this.router.navigateByUrl('');
+    
+    })
+    .catch(err => {
+      this.error = err.message;
+    });
 
-    if(this.authService.error.length == 0) {
-      this.error = `Please check the spelling of your login and password.`
-    }
    }
+   loginGoogle() {
+    this.authService.googleAuth();
+  }
 
+  loginFb(){
+    this.authService.loginFb();
+  }
+
+  loginGitHub(){
+    this.authService.gitHubAuth();
+  }
 }

@@ -1,0 +1,20 @@
+<div class="wrapper">
+    <mat-card *ngFor="let question of questions,let i = index" >
+        <mat-card *ngIf = "i==show()">
+         <mat-card-title class = "title-full-question">
+             <p class = "name-full_question">{{question.name}}</p>
+             <h2 class = "title-card">{{question.title}}</h2>
+             <p class = "date-full_question">{{question.date}}</p>
+         </mat-card-title>
+         <mat-card-content>
+             <p class = "question-text">{{question.text}}</p>
+             <mat-card-actions>
+                <div *ngFor="let tog of question.togs,let i = index" class="togs-question">
+                    <span *ngIf = "tog">tog{{i+1}}</span>
+                </div>
+                 <div class="btn"></div>
+             </mat-card-actions>
+         </mat-card-content>
+        </mat-card>
+     </mat-card>
+</div>

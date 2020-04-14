@@ -12,6 +12,7 @@
 mat-card{
     min-width: 400px;
     text-align: center;
+    margin-top: 8rem;
 }
 .btn-sign_in{
     margin-top: 1.5rem !important;
@@ -24,4 +25,26 @@ mat-card-title{
 }
 mat-form-field{
     font-size: 1.2rem;
+}
+.facebook::before{
+    font-family: 'icomoon';
+    content: "\f09a";
+}
+.google::before{
+    font-family: 'icomoon';
+    content: "\f0d5";
+}
+.github::before{
+    font-family: 'icomoon';
+    content: "\f09b";
+}
+.mat-card-actions .mat-raised-button{
+    margin:0;
+}
+.google{
+    margin:0 10px !important
+}
+.error-type{
+    margin-top:1rem;
+    max-width: 300px;
 }

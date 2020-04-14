@@ -15,11 +15,15 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatMenuModule} from '@angular/material/menu';
-import { NewQuestionComponent } from './new-question/new-question.component';
+import { NewQuestionComponent } from './question/new-question/new-question.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { HomeGuard } from './home.guard';
+import { HttpClientModule } from '@angular/common/http';
+import {MatListModule} from '@angular/material/list';
+import { FullQuestionComponent } from './question/full-question/full-question.component';
 
 
 @NgModule({
@@ -28,10 +32,12 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     HomePageComponent,
     ToolbarComponent,
     NewQuestionComponent,
+    FullQuestionComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
 
     MatButtonModule,
     MatToolbarModule,
@@ -41,6 +47,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
+    MatListModule,
 
     ReactiveFormsModule,
     
@@ -51,7 +58,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     RouterModule.forRoot(routes),
 
   ],
-  providers: [],
+  providers:[HomeGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

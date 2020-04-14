@@ -1,16 +1,31 @@
-<mat-card class="lower-menu">
-    <button mat-raised-button color="primary">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">filter_list</mat-icon>
-        filter</button>
-    <button mat-raised-button color="primary">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">sort</mat-icon>
-        sort
-    </button>
-    <button mat-raised-button color="primary">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">settings</mat-icon>
-        settings
-    </button>
-</mat-card>
-<mat-card>
+<div class="wrapper">
+    <mat-card class="lower-menu">
+        <button mat-raised-button color="primary">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">filter_list</mat-icon>
+            filter</button>
+        <button mat-raised-button color="primary">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">sort</mat-icon>
+            sort
+        </button>
+        <button mat-raised-button color="primary">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">settings</mat-icon>
+            settings
+        </button>
+    </mat-card>
+    <mat-card>
+        <mat-list>
+            <mat-card (click) = "questionNumber(i)" [routerLink]="['/full']" routerLinkActive="router-link-active"  class = "question" *ngFor="let question of questions,let i = index">
+                <div class="data-title_question">
+                    <div class="title-question">{{question.title}}</div>
+                    <div class="data-question">{{question.date}}</div>
+                </div>
+                <div *ngFor="let tog of question.togs,let i = index" class="togs-question">
+                    <span *ngIf = "tog">tog{{i+1}}</span>
+                </div>
+                <div class="btn-question"></div>
+            </mat-card>
+        </mat-list>
+           
+    </mat-card>
     
-</mat-card>
+</div>
