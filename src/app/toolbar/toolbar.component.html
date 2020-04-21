@@ -10,7 +10,7 @@
         <a  (click) = "showFormSignUp()" *ngIf="!user && isShowSignUp" mat-button routerLink = '/auth/sign-up' routerLinkActive="router-link-active">
             <mat-icon aria-hidden="false" aria-label="Example home icon">how_to_reg</mat-icon>
             Sign up</a>
-            <button (click) = "isShowAddQuestion()" *ngIf="user && click" routerLink = 'new' class = "add-question" mat-button color="primary">
+            <button *ngIf="user && click" (click) = "isShowAddQuestion()" routerLink = 'new' class = "add-question" mat-button color="primary">
                 <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
                 Add question
             </button>

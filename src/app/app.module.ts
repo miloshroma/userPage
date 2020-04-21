@@ -24,6 +24,7 @@ import { HomeGuard } from './home.guard';
 import { HttpClientModule } from '@angular/common/http';
 import {MatListModule} from '@angular/material/list';
 import { FullQuestionComponent } from './question/full-question/full-question.component';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { FullQuestionComponent } from './question/full-question/full-question.co
     
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,                  
+    AngularFireAuthModule,  
+    AngularFireDatabaseModule,   
 
     RouterModule.forRoot(routes),
 

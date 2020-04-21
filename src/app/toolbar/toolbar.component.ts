@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
-import { EventEmitter } from 'protractor';
 import { QuestionService } from '../question/questions.service';
 
 @Component({
@@ -11,7 +10,7 @@ import { QuestionService } from '../question/questions.service';
 })
 export class ToolbarComponent implements OnInit {
 
-  click:boolean = true;
+  click:boolean =  true || this.questionService.isShow;
   user:firebase.User;
   isShowLogin:Boolean = true;
   isShowSignUp:Boolean = true;
@@ -33,6 +32,9 @@ export class ToolbarComponent implements OnInit {
 
   isShowAddQuestion() {
     this.click = !this.click;
+    // this.click = !this.questionService.isShow;
+    //this.questionService.isShow = false;
+    console.log('this.click = ',this.questionService.isShow);
   }
 
   showFormLogin() {
@@ -41,4 +43,5 @@ export class ToolbarComponent implements OnInit {
   showFormSignUp() {
     this.isShowLogin = !this.isShowLogin;
   }
+  
 }

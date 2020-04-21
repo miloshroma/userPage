@@ -27,7 +27,7 @@
             </div>
             <mat-card-actions class="btn-result">
                 <button  mat-raised-button color = "primary">OK</button>
-                <button  [routerLink]="['']" routerLinkActive="router-link-active"  mat-raised-button color = "primary">Cancel</button>
+                <button  (click) = "closeNewQuestion()" [routerLink]="['']" routerLinkActive="router-link-active"  mat-raised-button color = "primary">Cancel</button>
             </mat-card-actions>
         </form>
     </mat-card-content>

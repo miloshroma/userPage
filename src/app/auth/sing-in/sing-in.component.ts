@@ -11,13 +11,14 @@ import { Router } from '@angular/router';
 export class SingInComponent implements OnInit {
 
   form:FormGroup;
-  error: string;
   
   
   constructor(private formBuilder: FormBuilder,
     private authService:AuthService,
     private router: Router ) {}
 
+  error: string = this.authService.error;
+  
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       email:['',[

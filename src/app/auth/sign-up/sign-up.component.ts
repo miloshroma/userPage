@@ -20,6 +20,8 @@ export class SignUpComponent implements OnInit {
     private router:Router,
     private auth:AngularFireAuth ) {}
 
+  error:string = this.authService.error;
+  
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       email:['',[
@@ -58,7 +60,14 @@ export class SignUpComponent implements OnInit {
       password: this.form.get('password').value,
     }
 
-    this.authService.signUp(data.email,data.password);
+    this.authService.signUp(data.email,data.password)
+    .then(res => {
+      console.log('Successfully signed in!');
+      this.router.navigateByUrl('');
+    })
+    .catch(err => {
+      this.error = err.message;
+    });;
    }
 
    

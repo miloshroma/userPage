@@ -17,11 +17,10 @@ export class HomeGuard implements CanActivate{
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot   ) : Observable<boolean> | boolean{
 
       console.log('+',this.afAuth.auth.currentUser);
-      if(this.afAuth.auth.currentUser){
-       
+      if (this.afAuth.auth.currentUser){
         return true;
       }
-      else if(!this.afAuth.auth.currentUser){
+      else if(this.afAuth.auth.currentUser) {
         return false;
       }
     }

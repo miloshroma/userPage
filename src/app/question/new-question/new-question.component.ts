@@ -13,7 +13,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class NewQuestionComponent implements OnInit {
 
   form:FormGroup;
-  click:boolean;
+  clickToShow:boolean = true;
   
   togs:string [] = ['tog1','tog2','tog3'];
   selectedTogsValue = [];
@@ -35,7 +35,8 @@ export class NewQuestionComponent implements OnInit {
         Validators.required
       ]],
       allTogs:this.addTogsControls(),
-    });    
+    });  
+      
   }
 
   addTogsControls() {
@@ -70,7 +71,6 @@ export class NewQuestionComponent implements OnInit {
   }
 
   addQuestion() {
-
     const question:Question = {
       title: this.form.get('title').value,
       text: this.form.get('text').value,
@@ -78,7 +78,6 @@ export class NewQuestionComponent implements OnInit {
       date: this.questionService.date.value.format('DD-MM-YYYY'),
       name: this.afAuth.auth.currentUser.email,
     }
-
     if(this.form.valid && !this.togsError){
       console.log(this.form.get('allTogs').value);
         this.questionService.showQuestion(question)
@@ -86,6 +85,9 @@ export class NewQuestionComponent implements OnInit {
         this.router.navigateByUrl('');
       },err => console.error(err));
     }
+  }
+  closeNewQuestion() {
+    this.questionService.isShow = true;
   }
 
 }

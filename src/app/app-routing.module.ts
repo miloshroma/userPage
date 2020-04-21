@@ -7,6 +7,6 @@ import { FullQuestionComponent } from './question/full-question/full-question.co
 export const routes: Routes = [
   {path:'', component: HomePageComponent, canActivate: [HomeGuard]},
   {path: 'new', component: NewQuestionComponent},
-  {path: 'full', component: FullQuestionComponent},
+  {path: 'full/:id', component: FullQuestionComponent},
   {path:'auth', loadChildren:() => import('./auth/auth.module').then(m => m.AuthModule)},
 ];

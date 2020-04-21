@@ -6,7 +6,7 @@
 .togs-question{
     margin-top: 15px;
     font-size: 1rem;
-    display: inline-block;
+   // display: inline-block;
 }
 .title-card{
     font-size: 1.5rem;
@@ -18,4 +18,19 @@
 .question-text{
     margin-top:2rem !important;
     font-size: 1rem;
+}
+.size-fields{
+    min-width: 600px;
+}
+.comments{
+    margin-top:2rem;
+}
+.comment-user{
+    display: flex;
+}
+.user-comment{
+    margin-left: 5rem;
+}
+.item-comment{
+    margin-top:1rem;
 }

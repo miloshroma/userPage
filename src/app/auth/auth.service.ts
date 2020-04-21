@@ -15,7 +15,7 @@ export interface UserData{
 })
 export class AuthService {
  
-  error:string = '';
+  error:string  ;
 
   constructor(private router:Router,private afAuth:AngularFireAuth){}
 
@@ -37,7 +37,8 @@ export class AuthService {
         console.log('You have been successfully logged in!')
         this.router.navigateByUrl('');
     }).catch((error) => {
-        console.log(error)
+      console.log(error)
+      this.error = error.message;
     })
   }
 
@@ -48,34 +49,20 @@ export class AuthService {
     })
     .catch((error)=>{
       console.log('Something is wrong:', error.message);
+      this.error = error.message;
     });
   }
 
   signUp(email: string, password: string) {
     return this.afAuth
       .auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(res => {
-        console.log('Successfully signed up!', res);
-        this.router.navigateByUrl('');
-      })
-      .catch(error => {
-        console.log('Something is wrong:', error.message);
-        this.error = error;
-      });    
+      .createUserWithEmailAndPassword(email, password)   
   }
 
   signIn(email: string, password: string) {
     return this.afAuth
       .auth
       .signInWithEmailAndPassword(email, password)
-      // .then(res => {
-      //   console.log('Successfully signed in!');
-      //   this.router.navigateByUrl('/');
-      // })
-      // .catch(err => {
-      //   console.log('Something is wrong:',err.message);
-      // });
   }
 
   getLoggerInUser() {

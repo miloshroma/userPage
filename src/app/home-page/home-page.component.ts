@@ -25,12 +25,12 @@ export class HomePageComponent implements OnInit {
 
     this.questionService.load().subscribe(question => {
      this.questions = question;
-     console.log('---->',this.questions); 
-      
+     console.log(this.questions)
     },err => console.error(err));
 
   }
   questionNumber(index){
     this.questionService.click = index;
+    console.log(index);
   }
 }

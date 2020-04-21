@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionService } from '../questions.service';
+import { QuestionService, Comment, Question } from '../questions.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth/auth.service';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-full-question',
@@ -8,22 +12,34 @@ import { QuestionService } from '../questions.service';
 })
 export class FullQuestionComponent implements OnInit {
 
-  questions:Object[];
-  index:number;
+  question:any;
+  index:any;
+  form:FormGroup;
+  user:firebase.User;
+  commentQuestion:any;
+  arrayOfComment: any[] = [];
 
-  constructor(private questionService:QuestionService) { }
+  constructor(private formBuilder: FormBuilder,
+    private questionService:QuestionService,
+    private afAuth:AngularFireAuth) { }
 
   ngOnInit(): void {
-    this.questionService.load().subscribe(question => {
-      this.questions = question;
-     // console.log('---->',this.questions);  
-     },err => console.error(err));
- 
+    this.questionService.findQuestion()
+    .then(question => {
+      this.question = question;
+    });
+    this.form = this.formBuilder.group({
+      comments: ['', [
+        Validators.required
+      ]],
+    });
   }
-
-  show() {
-    this.index = this.questionService.click;
-    return this.index;
+  
+  addComment(){
+    console.log(this.form.get('comments').value,this.afAuth.auth.currentUser.email,'id:',this.question.id)
+   this.arrayOfComment.push({comment:this.form.get('comments').value,userName:this.afAuth.auth.currentUser.email});
+    this.questionService.updateCustomer(this.question.id,
+      {newComment:this.arrayOfComment})
+      .catch(err => console.log(err));
   }
-
 }

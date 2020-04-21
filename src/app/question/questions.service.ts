@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
 export interface Question {
     id?: string;
@@ -14,26 +15,44 @@ export interface Question {
     name?:string;
 }
 
-interface addQuestion {
-    name:string;
+export interface Comment {
+    comment?:string;
+    userComment?:string;
 }
+
 
 @Injectable({providedIn: 'root'})
 
+
 export class QuestionService{
+
+    private dbPath = '/questions';
+ 
     public date:BehaviorSubject<moment.Moment> = new BehaviorSubject(moment());
 
     click:number;
+    question:Object;
+    isShow:boolean = true;
+    id:string;
 
-    static url = 'https://userpages-3fd35.firebaseio.com/';
 
-    constructor(private http:HttpClient, private router:Router) {}
+    static url = 'https://userpages-3fd35.firebaseio.com/questions';
+
+    questionRef: AngularFireList<Question> = null;
+
+    constructor(private http:HttpClient, private router:Router,
+        private db:AngularFireDatabase) {
+            this.questionRef = db.list(this.dbPath);
+        }
+    updateCustomer(key: string, value: any): Promise<void> {
+        return this.questionRef.update(key, value);
+    }
     
     showQuestion(question: Question): Observable<Question> {
         return this.http
         .post<any>(`${QuestionService.url}.json`,question)
         .pipe(map(res => {
-            console.log(res);
+            console.log('res',res);
             return {...question,id:res.name};
         }))
     }
@@ -45,7 +64,21 @@ export class QuestionService{
                 return [];
             }
             return Object.keys(question).map(key => ({...question[key],id:key}));
-        })); 
-
+        }));
     }
+
+    findQuestion() {
+        return this.http.get(`${QuestionService.url}/.json`)
+        .pipe(map(question => {
+            if(!question) {
+                return [];
+            }
+            return Object.keys(question).map(key => ({...question[key],id:key})).find(element => element.id == this.click);
+        })).toPromise()
+        .then(result => {
+            console.log('From Promise:', result);
+            return result;
+        });
+    }
+
 }
