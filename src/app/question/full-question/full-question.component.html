@@ -7,34 +7,47 @@
          </mat-card-title>
          <mat-card-content>
              <p class = "question-text">{{question?.text}}</p>
-             <mat-card-actions>
-                <div *ngFor="let tog of question?.togs,let i = index" class="togs-question">
-                    <span *ngIf = "tog">tog{{i+1}}</span>
-                </div>
-                 <div class="btn"></div>
+             <mat-card-actions class ="mat-card-actions">
+                 <div class="togs">
+                    <div *ngFor="let tog of question?.togs,let i = index" class="togs-question">
+                        <span *ngIf = "tog">tog{{i+1}}</span>
+                    </div> 
+                 </div>
+                <button *ngIf = "showCheckbox()" (click) = "editInformation()"mat-raised-button color = "primary" [routerLink]="['../../edit']" routerLinkActive="router-link-active">Edit</button>
              </mat-card-actions>
          </mat-card-content>
     </mat-card>
     <div class="comment-title">Comments/Answer</div>
     <mat-card class = "list-comments" *ngFor="let comment of question?.newComment,let i = index">
-        <mat-card-content>
+        <mat-card-content class = "comments-info">
             <div class="comment-user">
+                <mat-icon *ngIf = "trueComment" class = "done-icon" aria-hidden="false" aria-label="Example home icon">done_outline</mat-icon>
                 <div class="user-name">
-                    {{comment?.userName}}
+                    {{comment?.name}}
                 </div>
                 <div class="user-comment">
                     {{comment?.comment}}
                 </div>
+            </div>
+            <div class="date-comment">
+                {{comment?.date}}
+                <mat-checkbox *ngIf = "showCheckbox()" name = "checkbox{{i}}" [checked] = "checked" (change) = "onChange($event)"></mat-checkbox>
             </div>
         </mat-card-content>
     </mat-card>
     <mat-card class = "comments">
         <mat-card-content>
             <form class = "form"[formGroup]="form" (submit) = "addComment()"> 
+                <mat-card-title class = "answer-field">
+                    Add your answer
+                </mat-card-title>
                 <mat-form-field class="size-fields">
                     <mat-label>Comments/Answer</mat-label>
-                    <textarea matInput formControlName="comments"></textarea>
+                    <textarea rows = "7"class = "comment-input-field" matInput formControlName="comments"></textarea>
                 </mat-form-field>
+                <mat-error>
+                   {{error}}
+                   </mat-error>
                 <mat-card-actions>
                     <button mat-raised-button color = "primary">Your Answer</button>
                 </mat-card-actions>

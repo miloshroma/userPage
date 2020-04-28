@@ -21,6 +21,7 @@ export interface Comment {
 }
 
 
+
 @Injectable({providedIn: 'root'})
 
 
@@ -34,6 +35,7 @@ export class QuestionService{
     question:Object;
     isShow:boolean = true;
     id:string;
+    editQuestion:any;
 
 
     static url = 'https://userpages-3fd35.firebaseio.com/questions';
@@ -47,7 +49,9 @@ export class QuestionService{
     updateCustomer(key: string, value: any): Promise<void> {
         return this.questionRef.update(key, value);
     }
-    
+    updateTrueComment(id:string, number:number,value: any){
+        return this.db.list(`/questions/${id}/newComment/`).update(number.toString(),value);
+    }
     showQuestion(question: Question): Observable<Question> {
         return this.http
         .post<any>(`${QuestionService.url}.json`,question)
@@ -80,5 +84,4 @@ export class QuestionService{
             return result;
         });
     }
-
 }

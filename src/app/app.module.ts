@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
@@ -25,6 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatListModule} from '@angular/material/list';
 import { FullQuestionComponent } from './question/full-question/full-question.component';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { EditQuestionComponent } from './question/edit-question/edit-question.component';
 
 
 @NgModule({
@@ -34,11 +35,13 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     ToolbarComponent,
     NewQuestionComponent,
     FullQuestionComponent,
+    EditQuestionComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
 
     MatButtonModule,
     MatToolbarModule,

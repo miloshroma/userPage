@@ -1,0 +1,58 @@
+:host {
+    flex-grow: 1;
+    align-items: flex-start;
+    display: flex;
+    justify-content: center;
+    margin-top:5rem;
+}
+mat-card{
+    min-width: 1000px;
+}
+.input-fields{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+mat-card-title{
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+.title-card{
+    font-size: 1.7rem;
+}
+mat-form-field{
+    font-size: 1.2rem;
+}
+.checkbox-value{
+    display: flex;
+    flex-direction: column;
+    margin-left: 4.5rem;
+    font-size:1rem;
+}
+.size-fields{
+    min-width: 600px;
+}
+
+.togs-value{
+    display: flex;
+}
+.title-togs{
+    margin-left: 5rem;
+    font-size: 1.4rem;
+    font-weight: normal;
+}
+mat-checkbox:not(:first-child){
+    margin-top: .3rem;
+}
+.btn-result {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 12rem;
+    margin-top: 2em;
+}
+.errorMessege {
+    margin-left: 12rem;
+    margin-top: 1rem;
+}

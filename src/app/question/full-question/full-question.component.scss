@@ -6,7 +6,11 @@
 .togs-question{
     margin-top: 15px;
     font-size: 1rem;
-   // display: inline-block;
+    display: inline-block;
+}
+.mat-card-actions{
+    display: flex;
+    justify-content: space-between;
 }
 .title-card{
     font-size: 1.5rem;
@@ -28,9 +32,37 @@
 .comment-user{
     display: flex;
 }
+.user-name {
+    margin-left: 2rem;
+}
 .user-comment{
     margin-left: 5rem;
 }
 .item-comment{
     margin-top:1rem;
+}
+.comments-info {
+    display: flex;
+    justify-content: space-between;
+}
+.comment-title {
+    margin:3rem 0 2rem 1rem;
+    font-size: 1.2rem;
+}
+.list-comments {
+    margin-bottom: 1rem;
+}
+.answer-field {
+    margin-left: 1rem;
+    font-weight: normal;
+    margin-bottom: 1rem;
+}
+.form{
+    margin-left: 1rem;
+}
+.comment-input-field{
+    font-size: 1rem;
+}
+.done-icon{
+    background-color: #03fc5a;
 }

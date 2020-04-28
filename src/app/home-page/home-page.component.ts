@@ -33,4 +33,11 @@ export class HomePageComponent implements OnInit {
     this.questionService.click = index;
     console.log(index);
   }
+
+  sortOfDate() {
+    // let sortedCompetedList = this.questions.sort((a,b) => Date.parse(a.date.split('-').reverse().join('-')) - Date.parse(b.date.split('-').reverse().join('-')));
+    // let arrDate = this.questions.sort((a,b) => Date.parse(b.date.split('-').reverse().join('-')) - Date.parse(a.date.split('-').reverse().join('-')));
+    // console.log(sortedCompetedList,arrDate);
+    // this.questions = arrDate; -- you can decomment this. It's work, but have a troubles
+  }
 }

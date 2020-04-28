@@ -1,19 +1,19 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { FormGroup, FormBuilder,Validators, FormArray } from '@angular/forms';
-import { QuestionService, Question } from '../questions.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { QuestionService } from '../questions.service';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 
-
 @Component({
-  selector: 'app-new-question',
-  templateUrl: './new-question.component.html',
-  styleUrls: ['./new-question.component.scss']
+  selector: 'app-edit-question',
+  templateUrl: './edit-question.component.html',
+  styleUrls: ['./edit-question.component.scss']
 })
-export class NewQuestionComponent implements OnInit {
+export class EditQuestionComponent implements OnInit {
 
   form:FormGroup;
   clickToShow:boolean = true;
+  error:string;
   
   togs:string [] = ['tog1','tog2','tog3'];
   selectedTogsValue = [];
@@ -26,12 +26,12 @@ export class NewQuestionComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
 
-      title: ['',[
+    this.form = this.formBuilder.group({
+      title: [this.questionService.editQuestion.title,[
          Validators.required
       ]],
-      text: ['', [
+      text: [this.questionService.editQuestion.text, [
         Validators.required
       ]],
       allTogs:this.addTogsControls(),
@@ -40,8 +40,9 @@ export class NewQuestionComponent implements OnInit {
   }
 
   addTogsControls() {
-    const arr = this.togs.map((element) => {
-      return this.formBuilder.control(false);
+    const arr = this.questionService.editQuestion.togs.map((element) => {
+  
+      return this.formBuilder.control(element);
     });
     return this.formBuilder.array(arr);
   }
@@ -70,23 +71,11 @@ export class NewQuestionComponent implements OnInit {
     return flag;
   }
 
-  addQuestion() {
-    const question:Question = {
-      title: this.form.get('title').value,
-      text: this.form.get('text').value,
-      togs:this.form.get('allTogs').value,
-      date: this.questionService.date.value.format('YYYY-MM-DD'),
-      name: this.afAuth.auth.currentUser.email,
-    }
-    if(this.form.valid && !this.togsError){
-        this.questionService.showQuestion(question)
-      .subscribe(question => {
-        this.router.navigateByUrl('');
-      },err => console.error(err));
-    }
+  editQuestion() {
+    this.questionService.updateCustomer(this.questionService.editQuestion.id,{title:this.form.get('title').value,text:this.form.get('text').value,togs:this.form.get('allTogs').value})
+    .then(success => {
+      this.router.navigateByUrl('');
+    })
+    .catch(error => this.error = error);
   }
-  closeNewQuestion() {
-    this.questionService.isShow = true;
-  }
-
 }

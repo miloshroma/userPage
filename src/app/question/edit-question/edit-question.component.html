@@ -1,0 +1,37 @@
+<mat-card>
+    <mat-card-title>
+        <h2 class = "title-card">Edit question</h2>
+    </mat-card-title>
+    <mat-card-content>
+        <form class = "form"[formGroup]="form" (submit)= editQuestion()>
+            <div class="input-fields">
+                <mat-form-field class="size-fields">
+                    <mat-label>Title</mat-label>
+                    <input matInput placeholder="Title" formControlName="title">
+                </mat-form-field>
+                <mat-form-field class="size-fields">
+                    <mat-label>Text</mat-label>
+                    <textarea matInput formControlName="text"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="togs-value">
+                <div class = "title-togs">Togs</div>
+                <div class="checkbox-value" *ngFor="let control of togsArray.controls; let i = index">
+                    <mat-checkbox [formControl] = "control"(change) = "getselectedTogsValue()">{{togs[i]}}</mat-checkbox>
+                </div>
+            </div>
+            <div class="errorMessege" *ngIf= "togsError && checkedtogsTouches()">
+               <mat-error>
+                Please choose one
+               </mat-error>
+            </div>
+            <mat-error>
+                {{error}}
+            </mat-error>
+            <mat-card-actions class="btn-result">
+                <button  mat-raised-button color = "primary">OK</button>
+                <button [routerLink]="['']" routerLinkActive="router-link-active"  mat-raised-button color = "primary">Cancel</button>
+            </mat-card-actions>
+        </form>
+    </mat-card-content>
+</mat-card>
