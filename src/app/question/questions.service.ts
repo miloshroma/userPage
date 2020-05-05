@@ -11,7 +11,7 @@ export interface Question {
     title:string;
     text:string;
     togs: string[];
-    date?:string;
+    date:number;
     name?:string;
 }
 
@@ -29,10 +29,10 @@ export class QuestionService{
 
     private dbPath = '/questions';
  
-    public date:BehaviorSubject<moment.Moment> = new BehaviorSubject(moment());
+    public date:Date = new Date();
+    //:BehaviorSubject<moment.Moment> = new BehaviorSubject(moment());
 
-    click:number;
-    question:Object;
+    question:Question;
     isShow:boolean = true;
     id:string;
     editQuestion:any;
@@ -71,13 +71,13 @@ export class QuestionService{
         }));
     }
 
-    findQuestion() {
+    findQuestion(idQuestion) {
         return this.http.get(`${QuestionService.url}/.json`)
         .pipe(map(question => {
             if(!question) {
                 return [];
             }
-            return Object.keys(question).map(key => ({...question[key],id:key})).find(element => element.id == this.click);
+            return Object.keys(question).map(key => ({...question[key],id:key})).find(element => element.id == idQuestion);
         })).toPromise()
         .then(result => {
             console.log('From Promise:', result);

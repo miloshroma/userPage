@@ -32,9 +32,6 @@ export class ToolbarComponent implements OnInit {
 
   isShowAddQuestion() {
     this.click = !this.click;
-    // this.click = !this.questionService.isShow;
-    //this.questionService.isShow = false;
-    console.log('this.click = ',this.questionService.isShow);
   }
 
   showFormLogin() {

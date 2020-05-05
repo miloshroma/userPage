@@ -15,7 +15,7 @@ export class NewQuestionComponent implements OnInit {
   form:FormGroup;
   clickToShow:boolean = true;
   
-  togs:string [] = ['tog1','tog2','tog3'];
+ togs:string [] = ['tog1','tog2','tog3'];
   selectedTogsValue = [];
   togsError:boolean = true;
 
@@ -75,7 +75,7 @@ export class NewQuestionComponent implements OnInit {
       title: this.form.get('title').value,
       text: this.form.get('text').value,
       togs:this.form.get('allTogs').value,
-      date: this.questionService.date.value.format('YYYY-MM-DD'),
+      date: this.questionService.date.getTime(),
       name: this.afAuth.auth.currentUser.email,
     }
     if(this.form.valid && !this.togsError){

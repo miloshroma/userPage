@@ -26,3 +26,21 @@
     display: flex;
     justify-content: space-between;
 }
+mat-menu{
+    display: none;
+}
+// .list{
+//     display: flex;
+//     flex-flow: column wrap;
+// }
+
+// .question:nth-child(3n+1) { order: 1; }
+// .question:nth-child(3n+2) { order: 2; }
+// .question:nth-child(3n)   { order: 3; }
+// .list::before,
+// .list::after {
+//   content: "";
+//   flex-basis: 100%;
+//   width: 0;
+//   order: 2;
+// }

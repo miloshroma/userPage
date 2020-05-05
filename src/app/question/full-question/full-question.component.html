@@ -3,7 +3,7 @@
         <mat-card-title class = "title-full-question">
              <p class = "name-full_question">{{question?.name}}</p>
              <h2 class = "title-card">{{question?.title}}</h2>
-             <p class = "date-full_question">{{question?.date}}</p>
+             <p class = "date-full_question">{{question?.date | date: 'dd.MM.yyyy'}}</p>
          </mat-card-title>
          <mat-card-content>
              <p class = "question-text">{{question?.text}}</p>
@@ -21,7 +21,7 @@
     <mat-card class = "list-comments" *ngFor="let comment of question?.newComment,let i = index">
         <mat-card-content class = "comments-info">
             <div class="comment-user">
-                <mat-icon *ngIf = "trueComment" class = "done-icon" aria-hidden="false" aria-label="Example home icon">done_outline</mat-icon>
+                <mat-icon *ngIf = "comment.checked" class = "done-icon" aria-hidden="false" aria-label="Example home icon">done_outline</mat-icon>
                 <div class="user-name">
                     {{comment?.name}}
                 </div>
@@ -30,8 +30,8 @@
                 </div>
             </div>
             <div class="date-comment">
-                {{comment?.date}}
-                <mat-checkbox *ngIf = "showCheckbox()" name = "checkbox{{i}}" [checked] = "checked" (change) = "onChange($event)"></mat-checkbox>
+                {{comment?.date | date: 'dd.MM.yyyy'}}
+                <mat-checkbox *ngIf = "showCheckbox()" name = "checkbox{{i}}" [checked] = "comment?.checked" (change) = "onChange($event)"></mat-checkbox>
             </div>
         </mat-card-content>
     </mat-card>

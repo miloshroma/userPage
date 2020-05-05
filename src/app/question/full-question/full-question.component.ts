@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../questions.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Route } from '@angular/compiler/src/core';
+import { Params, ActivatedRoute } from '@angular/router';
 
-function User(comment, name, date) {
+function User(comment, name, date, checked) {
   this.comment = comment;
   this.name = name; 
   this.date = date;
+  this.checked = checked;
 }
 
 @Component({
@@ -23,31 +26,35 @@ export class FullQuestionComponent implements OnInit {
   commentQuestion:any;
   arrayOfComment: any[] = [];
   error:string;
-  checked:boolean;
+  checked:boolean = false;
   element:any
   trueComment:boolean;
 
   constructor(private formBuilder: FormBuilder,
     private questionService:QuestionService,
-    private afAuth:AngularFireAuth) { }
+    private afAuth:AngularFireAuth,
+    private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.questionService.findQuestion()
-    .then(question => {
-      this.question = question;
-      if(question?.newComment) {
-        this.arrayOfComment = question?.newComment;
-      }
-    });
-    this.form = this.formBuilder.group({
-      comments: ['', [
-        Validators.required
-      ]],
+    this.route.params.subscribe((params: Params) => {
+      const id = params['id'];
+      this.questionService.findQuestion(id)
+      .then(question => {
+        this.question = question;
+        if(question?.newComment) {
+          this.arrayOfComment = question?.newComment;
+        }
+      });
+      this.form = this.formBuilder.group({
+        comments: ['', [
+          Validators.required
+        ]],
+      });
     });
   }
   
   addComment(){
-    this.arrayOfComment.push(new User(this.form.get('comments').value,this.afAuth.auth.currentUser.email,this.questionService.date.value.format('DD-MM-YYYY')));
+    this.arrayOfComment.push(new User(this.form.get('comments').value,this.afAuth.auth.currentUser.email,this.questionService.date.getTime(),this.checked));
     this.questionService.updateCustomer(this.question.id,{newComment:this.arrayOfComment})
       .catch(err => this.error = err);
   }
@@ -63,10 +70,6 @@ export class FullQuestionComponent implements OnInit {
   }
 
   onChange(event) {
-    console.log(event.source.name,event.checked);
-   // this.checked = event.checked;
-    //this.checked = !this.checked
-
     let number = event.source.name.split('').reverse()[0];
    
     this.questionService.updateTrueComment(this.question.id,number,{checked:event.checked});
@@ -75,8 +78,7 @@ export class FullQuestionComponent implements OnInit {
         this.trueComment = elem.checked
       }
       
-    })
-    console.log(this.trueComment)
+    });
   }
 
 }

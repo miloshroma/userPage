@@ -1,0 +1,1 @@
+export const togs:string [] = ['tog1','tog2','tog3'];
