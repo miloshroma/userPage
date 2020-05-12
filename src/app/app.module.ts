@@ -26,7 +26,8 @@ import {MatListModule} from '@angular/material/list';
 import { FullQuestionComponent } from './question/full-question/full-question.component';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { EditQuestionComponent } from './question/edit-question/edit-question.component';
-
+import { FormatPipe} from './format.pipe';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { EditQuestionComponent } from './question/edit-question/edit-question.co
     NewQuestionComponent,
     FullQuestionComponent,
     EditQuestionComponent,
+    FormatPipe,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { EditQuestionComponent } from './question/edit-question/edit-question.co
     MatInputModule,
     MatCheckboxModule,
     MatListModule,
-
+    MatRadioModule,
+    
     ReactiveFormsModule,
     
 

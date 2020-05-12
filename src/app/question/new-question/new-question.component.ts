@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder,Validators, FormArray } from '@angular/forms';
 import { QuestionService, Question } from '../questions.service';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { togs } from '../../constants'
 
 
 @Component({
@@ -15,7 +16,7 @@ export class NewQuestionComponent implements OnInit {
   form:FormGroup;
   clickToShow:boolean = true;
   
- togs:string [] = ['tog1','tog2','tog3'];
+  togsValue = togs;
   selectedTogsValue = [];
   togsError:boolean = true;
 
@@ -36,11 +37,11 @@ export class NewQuestionComponent implements OnInit {
       ]],
       allTogs:this.addTogsControls(),
     });  
-      
+      console.log(togs);
   }
 
   addTogsControls() {
-    const arr = this.togs.map((element) => {
+    const arr = togs.map((element) => {
       return this.formBuilder.control(false);
     });
     return this.formBuilder.array(arr);
@@ -54,7 +55,7 @@ export class NewQuestionComponent implements OnInit {
     this.selectedTogsValue = [];
     this.togsArray.controls.forEach((control, i) => {
       if (control.value) {
-        this.selectedTogsValue.push(this.togs[i]);
+        this.selectedTogsValue.push(togs[i]);
       }
     });
    this.togsError = this.selectedTogsValue.length > 0 ? false : true;
@@ -75,15 +76,19 @@ export class NewQuestionComponent implements OnInit {
       title: this.form.get('title').value,
       text: this.form.get('text').value,
       togs:this.form.get('allTogs').value,
-      date: this.questionService.date.getTime(),
+      date: new Date().getTime(),
       name: this.afAuth.auth.currentUser.email,
     }
+    const adminNames = ['miloshroma9@gmail.com', 'roma@gmail.com'];
     if(this.form.valid && !this.togsError){
         this.questionService.showQuestion(question)
       .subscribe(question => {
         this.router.navigateByUrl('');
       },err => console.error(err));
     }
+    this.questionService.addAdmin(adminNames).subscribe((name) => {
+      console.log(name);
+    });
   }
   closeNewQuestion() {
     this.questionService.isShow = true;

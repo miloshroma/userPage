@@ -1,3 +1,4 @@
+
 .user-name{
     padding: 1.5rem;
 }
@@ -9,7 +10,7 @@
     display: flex;
     justify-content: space-between;
 }
-.question{
+.questionShow{
     margin-top:10px;
     cursor: pointer;
 }
@@ -20,7 +21,7 @@
 .togs-question{
     margin-top: 15px;
     font-size: 1rem;
-   // display: inline-block;
+    display: inline-block;
 }
 .data-title_question{
     display: flex;
@@ -29,18 +30,51 @@
 mat-menu{
     display: none;
 }
-// .list{
-//     display: flex;
-//     flex-flow: column wrap;
-// }
+.marker{
+    margin-left: 1rem;
+}
+.timesControl{
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+}
+.weekContol {
+    margin: 5px 0;
+}
+.list{ 
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 10px;
+    height: 100vw;
+}
+.question {
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+.question:nth-child(3n+1) { order: 1; }
+.question:nth-child(3n+2) { order: 2; }
+.question:nth-child(3n)   { order: 3; }
+.list::before,
+.list::after {
+    content: "";
+    flex-basis: 100%;
+    width: 0;
+    order: 2;
+}
+.layout {
+    width: 100%;
+}
 
-// .question:nth-child(3n+1) { order: 1; }
-// .question:nth-child(3n+2) { order: 2; }
-// .question:nth-child(3n)   { order: 3; }
-// .list::before,
-// .list::after {
-//   content: "";
-//   flex-basis: 100%;
-//   width: 0;
-//   order: 2;
-// }
+@media (max-width:850px) {
+    .question:nth-child(3n+1) { order: 1; }
+    .question:nth-child(3n+2) { order: 2; }
+
+.list::before,
+.list::after {
+    content: "";
+    flex-basis: 100%;
+    width: 0;
+    order: 1;
+}
+}

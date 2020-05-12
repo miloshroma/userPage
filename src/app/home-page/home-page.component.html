@@ -8,17 +8,14 @@
         <mat-menu #menu="matMenu" class = "matMenuFilter">
             <button mat-menu-item (click) = "completedFilter()">
               <span>Completed question</span>
+              <mat-icon *ngIf = "completed" class = "marker"color = "primary"aria-hidden="false" aria-label="Example home icon">fiber_manual_record</mat-icon>
             </button>
-            <button mat-menu-item (click) = "filterOfDay()">
-              <span>Day Filter</span>
-            </button>
-            <button mat-menu-item (click) = "filterOfWeek()">
-              <span>Week Filter</span>
-            </button>
-            <button mat-menu-item (click) = "filterOfMonth()">
-                <span>Month Filter</span>
-            </button>
-            <button mat-menu-item *ngFor = "let tog of togs; let i = index">
+            <mat-radio-group value = "times" (change) = "timeFilterValue($event)"class = "timesControl" aria-label="Select an option">
+                <mat-radio-button value="day">Day</mat-radio-button>
+                <mat-radio-button class = "weekContol" value="week">Week</mat-radio-button>
+                <mat-radio-button value="month">Month</mat-radio-button>
+              </mat-radio-group>
+            <button mat-menu-item *ngFor = "let tog of togsValue; let i = index">
                 <mat-checkbox (change) = "onChange($event)">tog{{i+1}}</mat-checkbox>
             </button>
           </mat-menu>
@@ -26,14 +23,21 @@
             <mat-icon aria-hidden="false" aria-label="Example home icon">sort</mat-icon>
             sort
         </button>
-        <button mat-raised-button color="primary">
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="menuName">
             <mat-icon aria-hidden="false" aria-label="Example home icon">settings</mat-icon>
             settings
+            <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
         </button>
+        <mat-menu #menuName="matMenu" class = "matMenuSettings" xPosition="before">
+            <button class = "layout" mat-button (click) ="addClasses()">
+                <mat-icon *ngIf = "layout"  class = "iconSize"aria-hidden="false" aria-label="Example home icon">view_headline</mat-icon>
+                <mat-icon *ngIf = "!layout" class = "iconSize"aria-hidden="false" aria-label="Example home icon">view_module</mat-icon>
+            </button>    
+        </mat-menu>
     </mat-card>
     <mat-card>
-        <mat-list class = "list">
-            <mat-card  class = "question" *ngFor="let question of questions,let i = index" [routerLink]="['full', question.id]" routerLinkActive="router-link-active" >
+        <mat-list [class.list] = "layout">
+            <mat-card [class.question] = "layout" class ="questionShow" *ngFor="let question of questions | format:completed:timeValue:checkedValue:numberOfCat,let i = index" [routerLink]="['full', question.id]" routerLinkActive="router-link-active" >
                 <div class="data-title_question">
                     <div class="title-question">{{question.title}}</div>
                     <div class="data-question">{{question.date | date: 'dd.MM.yyyy'}}</div>

@@ -17,10 +17,10 @@
             <div class="togs-value">
                 <div class = "title-togs">Togs</div>
                 <div class="checkbox-value" *ngFor="let control of togsArray.controls; let i = index">
-                    <mat-checkbox [formControl] = "control"(change) = "getselectedTogsValue()">{{togs[i]}}</mat-checkbox>
+                    <mat-checkbox [formControl] = "control"(change) = "getselectedTogsValue()">{{togsValue[i]}}</mat-checkbox>
                 </div>
             </div>
-            <div class="errorMessege" *ngIf= "togsError && checkedtogsTouches()">
+            <div class="errorMessege" *ngIf = "togsError && checkedtogsTouches()">
                <mat-error>
                 Please choose one
                </mat-error>

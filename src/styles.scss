@@ -15,17 +15,18 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', "Helvetica Neue", sans-serif; ;}
 
+
 .full-fields{
-    width: 100%;
+  width: 100%;
 }
 .wrapper{
-    display: flex;
-    flex-direction: column;
-    // height: 100%;
-    margin:0 auto;
-    max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  margin:0 auto;
+  max-width: 1400px;
 }
 a {
   text-decoration: none;
   color:#333;
 }
+  

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { QuestionService } from '../questions.service';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { togs } from '../../constants'
 
 @Component({
   selector: 'app-edit-question',
@@ -15,14 +16,13 @@ export class EditQuestionComponent implements OnInit {
   clickToShow:boolean = true;
   error:string;
   
-  togs:string [] = ['tog1','tog2','tog3'];
+  togsValue = togs;
   selectedTogsValue = [];
   togsError:boolean = true;
 
   constructor(private formBuilder: FormBuilder,
     private questionService:QuestionService,
-    private router:Router,
-    private afAuth:AngularFireAuth) { }
+    private router:Router,) { }
 
 
   ngOnInit(): void {
@@ -55,7 +55,7 @@ export class EditQuestionComponent implements OnInit {
     this.selectedTogsValue = [];
     this.togsArray.controls.forEach((control, i) => {
       if (control.value) {
-        this.selectedTogsValue.push(this.togs[i]);
+        this.selectedTogsValue.push(togs[i]);
       }
     });
    this.togsError = this.selectedTogsValue.length > 0 ? false : true;

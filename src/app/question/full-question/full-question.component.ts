@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../questions.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Route } from '@angular/compiler/src/core';
 import { Params, ActivatedRoute } from '@angular/router';
 
 function User(comment, name, date, checked) {
@@ -29,6 +28,7 @@ export class FullQuestionComponent implements OnInit {
   checked:boolean = false;
   element:any
   trueComment:boolean;
+  //showTrue:boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private questionService:QuestionService,
@@ -74,11 +74,12 @@ export class FullQuestionComponent implements OnInit {
    
     this.questionService.updateTrueComment(this.question.id,number,{checked:event.checked});
     this.question.newComment.forEach((elem,i) => {
-      if(i == number) {
+      if(i === number) {
         this.trueComment = elem.checked
       }
-      
     });
-  }
 
+    //console.log(event);
+    //this.showTrue = event.checked;
+  }
 }

@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable, BehaviorSubject } from 'rxjs';
-import * as moment from 'moment';
+import { Observable} from 'rxjs';
 import { Router } from '@angular/router';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
@@ -21,7 +20,6 @@ export interface Comment {
 }
 
 
-
 @Injectable({providedIn: 'root'})
 
 
@@ -30,15 +28,14 @@ export class QuestionService{
     private dbPath = '/questions';
  
     public date:Date = new Date();
-    //:BehaviorSubject<moment.Moment> = new BehaviorSubject(moment());
 
     question:Question;
     isShow:boolean = true;
     id:string;
     editQuestion:any;
 
-
     static url = 'https://userpages-3fd35.firebaseio.com/questions';
+    static urlName = 'https://userpages-3fd35.firebaseio.com/admins';
 
     questionRef: AngularFireList<Question> = null;
 
@@ -83,5 +80,14 @@ export class QuestionService{
             console.log('From Promise:', result);
             return result;
         });
+    }
+
+    addAdmin(adminNames): Observable<any> {
+        return this.http
+        .post<any>(`${QuestionService.urlName}.json`,adminNames)
+        .pipe(map(res => {
+            console.log('res',res);
+            return {adminNames};
+        }))
     }
 }
