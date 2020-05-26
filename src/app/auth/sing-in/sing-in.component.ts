@@ -2,6 +2,7 @@ import { Component, OnInit  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService, UserData } from '../auth.service';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-sing-in',
@@ -13,7 +14,7 @@ export class SingInComponent implements OnInit {
   form:FormGroup;
   
   
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: FormBuilder,private afAuth:AngularFireAuth,
     private authService:AuthService,
     private router: Router ) {}
 
@@ -62,6 +63,12 @@ export class SingInComponent implements OnInit {
     .catch(err => {
       this.error = err.message;
     });
+
+    // this.authService.addAdmin().subscribe((admins) => {
+    //   console.log(admins,'<-------');
+    //   this.authService.admins = admins.filter(item => item === this.form.get('email').value);
+    //   console.log( this.authService.admins);
+    // });
 
    }
    loginGoogle() {

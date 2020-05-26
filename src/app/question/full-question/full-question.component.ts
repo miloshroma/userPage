@@ -3,6 +3,7 @@ import { QuestionService } from '../questions.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Params, ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 
 function User(comment, name, date, checked) {
   this.comment = comment;
@@ -28,12 +29,14 @@ export class FullQuestionComponent implements OnInit {
   checked:boolean = false;
   element:any
   trueComment:boolean;
+  admin:string;
   //showTrue:boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private questionService:QuestionService,
     private afAuth:AngularFireAuth,
-    private route:ActivatedRoute) { }
+    private route:ActivatedRoute,
+    private authService:AuthService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -51,12 +54,22 @@ export class FullQuestionComponent implements OnInit {
         ]],
       });
     });
+    this.admin = this.authService.admin;
   }
   
   addComment(){
-    this.arrayOfComment.push(new User(this.form.get('comments').value,this.afAuth.auth.currentUser.email,this.questionService.date.getTime(),this.checked));
+    let user = {
+      comment:this.form.get('comments').value,
+      name: this.afAuth.auth.currentUser.email,
+      date: this.questionService.date.getTime(),
+      checked:this.checked,
+    }
+    this.arrayOfComment.push(/*new User(this.form.get('comments').value,this.afAuth.auth.currentUser.email,this.questionService.date.getTime(),this.checked));*/user);
+    console.log(this.arrayOfComment);
     this.questionService.updateCustomer(this.question.id,{newComment:this.arrayOfComment})
       .catch(err => this.error = err);
+
+      this.form.get('comments').setValue(' ');
   }
   showCheckbox() {
     if (this.question?.name === this.afAuth.auth.currentUser?.email) {
@@ -69,17 +82,16 @@ export class FullQuestionComponent implements OnInit {
     this.questionService.editQuestion = this.question;
   }
 
-  onChange(event) {
+  onChange(event, comment) {
     let number = event.source.name.split('').reverse()[0];
    
     this.questionService.updateTrueComment(this.question.id,number,{checked:event.checked});
-    this.question.newComment.forEach((elem,i) => {
-      if(i === number) {
-        this.trueComment = elem.checked
-      }
-    });
+    comment.checked = event.checked;
+  }
 
-    //console.log(event);
-    //this.showTrue = event.checked;
+  toApprove(){
+    this.question.approve = !this.question.approve
+    this.questionService.updateApproveState(this.question.id,{approve:this.question.approve});
+    console.log(this.question.approve)
   }
 }

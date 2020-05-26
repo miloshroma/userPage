@@ -28,6 +28,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { EditQuestionComponent } from './question/edit-question/edit-question.component';
 import { FormatPipe} from './format.pipe';
 import {MatRadioModule} from '@angular/material/radio';
+//import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -69,4 +70,14 @@ import {MatRadioModule} from '@angular/material/radio';
   providers:[HomeGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  // constructor(private authService:AuthService){}
+
+  // ngOnInit(): void {
+  //  const  adminNames = ['miloshroma9@gmail.com', 'roma@gmail.com'];
+  //   this.authService.addAdmin(adminNames).subscribe((name) => {
+  //     console.log(name);
+  //     });
+  // }
+ }

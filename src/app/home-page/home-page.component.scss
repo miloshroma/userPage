@@ -41,12 +41,21 @@ mat-menu{
 .weekContol {
     margin: 5px 0;
 }
+.monthContol {
+    margin-bottom: 5px;
+}
 .list{ 
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     padding: 10px;
     height: 100vw;
+}
+.btn-question{
+    margin-top:5px;
+}
+.btn_delete{
+    margin-left: 10px;
 }
 .question {
     margin-bottom: 10px;

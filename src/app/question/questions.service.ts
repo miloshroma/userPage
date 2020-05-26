@@ -12,6 +12,7 @@ export interface Question {
     togs: string[];
     date:number;
     name?:string;
+    approve:boolean;
 }
 
 export interface Comment {
@@ -49,6 +50,9 @@ export class QuestionService{
     updateTrueComment(id:string, number:number,value: any){
         return this.db.list(`/questions/${id}/newComment/`).update(number.toString(),value);
     }
+    updateApproveState(key:any,value: any){
+        return this.db.list(`/questions/`).update(key,value);
+    }
     showQuestion(question: Question): Observable<Question> {
         return this.http
         .post<any>(`${QuestionService.url}.json`,question)
@@ -81,13 +85,12 @@ export class QuestionService{
             return result;
         });
     }
-
-    addAdmin(adminNames): Observable<any> {
+    addAdmin(): Observable<any> {
         return this.http
-        .post<any>(`${QuestionService.urlName}.json`,adminNames)
+        .get<any>(`${QuestionService.urlName}.json`)
         .pipe(map(res => {
             console.log('res',res);
-            return {adminNames};
+            return res;
         }))
     }
 }

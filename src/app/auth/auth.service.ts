@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { auth } from 'firebase';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable} from 'rxjs';
 
 export interface UserData{
   id?: string,
@@ -15,9 +18,13 @@ export interface UserData{
 })
 export class AuthService {
  
-  error:string  ;
+  error:string;
+  static urlName = 'https://userpages-3fd35.firebaseio.com/admins';
+  admin: string;
 
-  constructor(private router:Router,private afAuth:AngularFireAuth){}
+
+  constructor(private router:Router,private afAuth:AngularFireAuth,
+    private http:HttpClient){}
 
   googleAuth() {
     return this.authLogin(new auth.GoogleAuthProvider());
@@ -68,4 +75,13 @@ export class AuthService {
   getLoggerInUser() {
     return this.afAuth.authState;
   }
+
+  addAdmin(): Observable<any> {
+    return this.http
+    .get<any>(`${AuthService.urlName}.json`)
+    .pipe(map(res => {
+        console.log('res',res);
+        return res;
+    }))
+}
 }

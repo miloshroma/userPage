@@ -78,17 +78,15 @@ export class NewQuestionComponent implements OnInit {
       togs:this.form.get('allTogs').value,
       date: new Date().getTime(),
       name: this.afAuth.auth.currentUser.email,
+      approve: false,
     }
-    const adminNames = ['miloshroma9@gmail.com', 'roma@gmail.com'];
+    
     if(this.form.valid && !this.togsError){
         this.questionService.showQuestion(question)
       .subscribe(question => {
         this.router.navigateByUrl('');
       },err => console.error(err));
     }
-    this.questionService.addAdmin(adminNames).subscribe((name) => {
-      console.log(name);
-    });
   }
   closeNewQuestion() {
     this.questionService.isShow = true;

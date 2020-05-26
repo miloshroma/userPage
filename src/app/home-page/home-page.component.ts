@@ -30,7 +30,7 @@ export class HomePageComponent implements OnInit {
   numberOfCat:number;
   checkedValue:boolean = false;
   layout:boolean = false;
-
+  admin:string;
   constructor(private authSevice:AuthService,
     private questionService:QuestionService) { }
 
@@ -45,6 +45,11 @@ export class HomePageComponent implements OnInit {
      this.questions = question;
      console.log(this.questions)
     },err => console.error(err));
+
+    this.authSevice.addAdmin().subscribe((admins) => {
+      this.authSevice.admin = admins.filter((item) => item === this.user.email)[0];
+      this.admin = this.authSevice.admin;
+    });
   }
 
   sortOfDate() {

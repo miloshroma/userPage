@@ -9,21 +9,18 @@ import { AngularFireAuth } from 'angularfire2/auth';
   })
 export class HomeGuard implements CanActivate{
 
+  user:firebase.User;
 
- 
-    constructor(private authSevice:AuthService,private router:Router,private afAuth:AngularFireAuth) {}
+  constructor(private authService:AuthService,private router:Router,private afAuth:AngularFireAuth) {}
 
-
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot   ) : Observable<boolean> | boolean{
-
-      console.log('+',this.afAuth.auth.currentUser);
-      if (this.afAuth.auth.currentUser){
-        return true;
-      }
-      else if(this.afAuth.auth.currentUser) {
-        return false;
-      }
-    }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<boolean> | boolean{
+    this.authService.getLoggerInUser()
+    .subscribe(user => {
+      this.user = user;
+    })
+    console.log('1',this.user);
+    console.log('2',this.afAuth.auth.currentUser);
+    return this.afAuth.auth.currentUser ? true : false;
+  }
     
-  
 }
