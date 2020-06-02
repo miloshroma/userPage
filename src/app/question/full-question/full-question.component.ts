@@ -5,6 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Params, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 
+
 function User(comment, name, date, checked) {
   this.comment = comment;
   this.name = name; 
@@ -29,14 +30,15 @@ export class FullQuestionComponent implements OnInit {
   checked:boolean = false;
   element:any
   trueComment:boolean;
-  admin:string;
-  //showTrue:boolean = false;
+  admin:boolean;
+  colorInherit:boolean;
+
 
   constructor(private formBuilder: FormBuilder,
     private questionService:QuestionService,
     private afAuth:AngularFireAuth,
     private route:ActivatedRoute,
-    private authService:AuthService) { }
+    private authService:AuthService,) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -44,9 +46,6 @@ export class FullQuestionComponent implements OnInit {
       this.questionService.findQuestion(id)
       .then(question => {
         this.question = question;
-        if(question?.newComment) {
-          this.arrayOfComment = question?.newComment;
-        }
       });
       this.form = this.formBuilder.group({
         comments: ['', [
@@ -54,7 +53,8 @@ export class FullQuestionComponent implements OnInit {
         ]],
       });
     });
-    this.admin = this.authService.admin;
+    this.admin = this.authService.isAdmin;
+    this.colorInherit = this.questionService.colorApp;
   }
   
   addComment(){
@@ -63,6 +63,9 @@ export class FullQuestionComponent implements OnInit {
       name: this.afAuth.auth.currentUser.email,
       date: this.questionService.date.getTime(),
       checked:this.checked,
+    }
+    if(this.question?.newComment) {
+      this.arrayOfComment = this.question?.newComment;
     }
     this.arrayOfComment.push(/*new User(this.form.get('comments').value,this.afAuth.auth.currentUser.email,this.questionService.date.getTime(),this.checked));*/user);
     console.log(this.arrayOfComment);

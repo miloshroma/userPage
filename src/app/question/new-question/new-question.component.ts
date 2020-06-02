@@ -37,7 +37,6 @@ export class NewQuestionComponent implements OnInit {
       ]],
       allTogs:this.addTogsControls(),
     });  
-      console.log(togs);
   }
 
   addTogsControls() {

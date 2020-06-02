@@ -22,7 +22,7 @@ export class EditQuestionComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private questionService:QuestionService,
-    private router:Router,) { }
+    private router:Router) { }
 
 
   ngOnInit(): void {

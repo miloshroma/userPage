@@ -34,6 +34,7 @@ export class QuestionService{
     isShow:boolean = true;
     id:string;
     editQuestion:any;
+    colorApp:boolean = false;
 
     static url = 'https://userpages-3fd35.firebaseio.com/questions';
     static urlName = 'https://userpages-3fd35.firebaseio.com/admins';

@@ -30,7 +30,13 @@ export class HomePageComponent implements OnInit {
   numberOfCat:number;
   checkedValue:boolean = false;
   layout:boolean = false;
-  admin:string;
+  admin:boolean;
+  colorInvert:boolean = false;
+  approve:boolean = true;
+  moderationOn: boolean = false;
+  myQuestion: boolean = false;
+  name:string;
+
   constructor(private authSevice:AuthService,
     private questionService:QuestionService) { }
 
@@ -39,6 +45,10 @@ export class HomePageComponent implements OnInit {
     this.authSevice.getLoggerInUser()
     .subscribe(user => {
       this.user = user;
+      this.authSevice.addAdmin(this.user.email).subscribe((admins) => {
+        this.admin = admins;
+        this.authSevice.isAdmin = admins;
+      });
     });
 
     this.questionService.load().subscribe(question => {
@@ -46,10 +56,6 @@ export class HomePageComponent implements OnInit {
      console.log(this.questions)
     },err => console.error(err));
 
-    this.authSevice.addAdmin().subscribe((admins) => {
-      this.authSevice.admin = admins.filter((item) => item === this.user.email)[0];
-      this.admin = this.authSevice.admin;
-    });
   }
 
   sortOfDate() {
@@ -70,5 +76,17 @@ export class HomePageComponent implements OnInit {
   }
   addClasses() {
     this.layout = !this.layout
+  }
+  invertColor() {
+    this.colorInvert = !this.colorInvert;
+    this.questionService.colorApp = this.colorInvert;
+  }
+  moderationFilter() {
+    this.moderationOn = !this.moderationOn;
+  }
+  myQuestionFilter() {
+    this.myQuestion = !this.myQuestion;
+    this.name = this.user.email;
+    console.log(this.name)
   }
 }

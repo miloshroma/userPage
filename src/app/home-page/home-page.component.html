@@ -1,58 +1,73 @@
-<div class="wrapper">
-    <mat-card class="lower-menu">
-        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon aria-hidden="false" aria-label="Example home icon">filter_list</mat-icon>
-            filter
-            <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu" class = "matMenuFilter">
-            <button mat-menu-item (click) = "completedFilter()">
-              <span>Completed question</span>
-              <mat-icon *ngIf = "completed" class = "marker"color = "primary"aria-hidden="false" aria-label="Example home icon">fiber_manual_record</mat-icon>
+<div [class.black_form] = "colorInvert">
+    <div class="wrapper">
+        <mat-card class="lower-menu" [class.black_form] = "colorInvert">
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">filter_list</mat-icon>
+                filter
+                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
             </button>
-            <mat-radio-group value = "times" (change) = "timeFilterValue($event)"class = "timesControl" aria-label="Select an option">
-                <mat-radio-button value="day">Day</mat-radio-button>
-                <mat-radio-button class = "weekContol" value="week">Week</mat-radio-button>
-                <mat-radio-button class = "monthContol" value="month">Month</mat-radio-button>
-                <mat-radio-button value="all_time">All Time</mat-radio-button>
-              </mat-radio-group>
-            <button mat-menu-item *ngFor = "let tog of togsValue; let i = index">
-                <mat-checkbox (change) = "onChange($event)">tog{{i+1}}</mat-checkbox>
+            <mat-menu #menu="matMenu" class = "matMenuFilter">
+                <button mat-menu-item (click) = "completedFilter()">
+                  <span>Completed question</span>
+                  <mat-icon *ngIf = "completed" class = "marker"color = "primary"aria-hidden="false" aria-label="Example home icon">fiber_manual_record</mat-icon>
+                </button>
+                <mat-radio-group value = "times" (change) = "timeFilterValue($event)"class = "timesControl" aria-label="Select an option">
+                    <mat-radio-button value="day">Day</mat-radio-button>
+                    <mat-radio-button class = "weekContol" value="week">Week</mat-radio-button>
+                    <mat-radio-button class = "monthContol" value="month">Month</mat-radio-button>
+                  </mat-radio-group>
+                <button mat-menu-item *ngFor = "let tog of togsValue; let i = index">
+                    <mat-checkbox (change) = "onChange($event)">tog{{i+1}}</mat-checkbox>
+                </button>
+                <button *ngIf = "admin" mat-menu-item (click) = "moderationFilter()">
+                    <span>Moderation</span>
+                    <mat-icon *ngIf = "moderationOn" class = "marker"color = "primary"aria-hidden="false" aria-label="Example home icon">fiber_manual_record</mat-icon>
+                  </button>
+                  <button mat-menu-item (click) = "myQuestionFilter()">
+                    <span>My Questions</span>
+                    <mat-icon *ngIf = "myQuestion" class = "marker"color = "primary"aria-hidden="false" aria-label="Example home icon">fiber_manual_record</mat-icon>
+                  </button>
+              </mat-menu>
+            <button (click) = "sortOfDate()"mat-raised-button color="primary">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">sort</mat-icon>
+                sort
             </button>
-          </mat-menu>
-        <button (click) = "sortOfDate()"mat-raised-button color="primary">
-            <mat-icon aria-hidden="false" aria-label="Example home icon">sort</mat-icon>
-            sort
-        </button>
-        <button mat-raised-button color="primary" [matMenuTriggerFor]="menuName">
-            <mat-icon aria-hidden="false" aria-label="Example home icon">settings</mat-icon>
-            settings
-            <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-        </button>
-        <mat-menu #menuName="matMenu" class = "matMenuSettings" xPosition="before">
-            <button class = "layout" mat-button (click) ="addClasses()">
-                <mat-icon *ngIf = "layout"  class = "iconSize"aria-hidden="false" aria-label="Example home icon">view_headline</mat-icon>
-                <mat-icon *ngIf = "!layout" class = "iconSize"aria-hidden="false" aria-label="Example home icon">view_module</mat-icon>
-            </button>    
-        </mat-menu>
-    </mat-card>
-    <mat-card>
-        <mat-list [class.list] = "layout">
-            <div  [class.question] = "layout" class ="questionShow" *ngFor="let question of questions | format:completed:timeValue:checkedValue:numberOfCat,let i = index"  [routerLink]="['full', question.id]" routerLinkActive="router-link-active">
-                <mat-card>
-                    <div class="data-title_question">
-                        <div class="title-question">{{question.title}}</div>
-                        <div class="data-question">{{question.date | date: 'dd.MM.yyyy'}}</div>
-                    </div>
-                    <div *ngFor="let tog of question.togs,let i = index" class="togs-question">
-                        <span *ngIf = "tog">tog{{i+1}}</span>
-                    </div>
-                    <div *ngIf = "admin" class="btn-question">
-                        <button mat-raised-button color = "primary">Approve</button>
-                        <button class = "btn_delete" mat-raised-button color = "primary">Delete</button>
-                    </div>
-                </mat-card>
-            </div>
-        </mat-list>    
-    </mat-card>
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menuName">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">settings</mat-icon>
+                settings
+                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #menuName="matMenu" class = "matMenuSettings" xPosition="before">
+                <button class = "layout" mat-button (click) ="addClasses()">
+                    <mat-icon *ngIf = "layout"  class = "iconSize"aria-hidden="false" aria-label="Example home icon">view_headline</mat-icon>
+                    <mat-icon *ngIf = "!layout" class = "iconSize"aria-hidden="false" aria-label="Example home icon">view_module</mat-icon>
+                </button>
+                <button class = "layout" mat-button (click) = "invertColor()">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">invert_colors</mat-icon>
+                </button> 
+            </mat-menu>
+        </mat-card>
+        <mat-card  [class.black_form] = "colorInvert">
+            <mat-list [class.list] = "layout">
+                <div  [class.question] = "layout" class ="questionShow" *ngFor="let question of questions | format:completed:timeValue:checkedValue:numberOfCat:admin:moderationOn:myQuestion:name,let i = index"  [routerLink]="['full', question.id]" routerLinkActive="router-link-active">
+                    <mat-card>
+                        <div class="data-title_question">
+                            <div class="title-question">{{question.title}}</div>
+                            <div class="data-question">{{question.date | date: 'dd.MM.yyyy'}}</div>
+                        </div>
+                        <div class="second_line">
+                            <div class="tagsNames">
+                                <div *ngFor="let tog of question.togs,let i = index" class="togs-question">
+                                    <span *ngIf = "tog">tog{{i+1}}</span>
+                                </div>
+                            </div>
+                            <div *ngIf = "!question.approve" class="moderation">
+                                На модерации
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+            </mat-list>    
+        </mat-card>
+    </div>    
 </div>

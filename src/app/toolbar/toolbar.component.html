@@ -1,33 +1,35 @@
-<div class="wrapper">
-    <mat-toolbar color ="primary">
-        <a routerLink = '' routerLinkActive="router-link-active" mat-button>
-            <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
-            Web Page</a>
-        <span class="flex-grow"></span>
-        <a (click) = "showFormLogin()" *ngIf="!user && isShowLogin"  mat-button routerLink = '/auth/sign-in' routerLinkActive="router-link-active">
-            <mat-icon aria-hidden="false" aria-label="Example home icon">account_circle</mat-icon>
-            Login</a>
-        <a  (click) = "showFormSignUp()" *ngIf="!user && isShowSignUp" mat-button routerLink = '/auth/sign-up' routerLinkActive="router-link-active">
-            <mat-icon aria-hidden="false" aria-label="Example home icon">how_to_reg</mat-icon>
-            Sign up</a>
-            <button *ngIf="user && click" (click) = "isShowAddQuestion()" routerLink = 'new' class = "add-question" mat-button color="primary">
-                <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
-                Add question
-            </button>
-            <button *ngIf="user" class = "page-menu" mat-button [matMenuTriggerFor]="menu">
-                <span mat-card-avatar class="user-image"></span>
-                {{user?.email}}
-                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>
-                <a (click) = "logOut()" routerLink = '/auth' routerLinkActive="router-link-active">
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">exit_to_app</mat-icon>
-                    Exit</a>
-              </button>
-              <button mat-menu-item><a [routerLink]="['']">
+<div [class.black_form] = "colorInvert">
+    <div class="wrapper">
+        <mat-toolbar color ="primary">
+            <a routerLink = '' routerLinkActive="router-link-active" mat-button>
                 <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
-                Home Page</a></button>
-            </mat-menu>
-    </mat-toolbar>
+                Web Page</a>
+            <span class="flex-grow"></span>
+            <a (click) = "showFormLogin()" *ngIf="!user && isShowLogin"  mat-button routerLink = '/auth/sign-in' routerLinkActive="router-link-active">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">account_circle</mat-icon>
+                Login</a>
+            <a  (click) = "showFormSignUp()" *ngIf="!user && isShowSignUp" mat-button routerLink = '/auth/sign-up' routerLinkActive="router-link-active">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">how_to_reg</mat-icon>
+                Sign up</a>
+                <button *ngIf="user && click" (click) = "isShowAddQuestion()" routerLink = 'new' class = "add-question" mat-button color="primary">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
+                    Add question
+                </button>
+                <button *ngIf="user" class = "page-menu" mat-button [matMenuTriggerFor]="menu">
+                    <span mat-card-avatar class="user-image"></span>
+                    {{user?.email}}
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item>
+                    <a (click) = "logOut()" routerLink = '/auth' routerLinkActive="router-link-active">
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">exit_to_app</mat-icon>
+                        Exit</a>
+                    </button>
+                    <button mat-menu-item><a [routerLink]="['']">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
+                    Home Page</a></button>
+                </mat-menu>
+        </mat-toolbar>
+    </div>    
 </div>

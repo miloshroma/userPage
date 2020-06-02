@@ -6,12 +6,10 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable} from 'rxjs';
 
-export interface UserData{
-  id?: string,
-  email: string,
-  password: string,
+export interface UserData {
+  password: any,
+  email: any,
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +19,7 @@ export class AuthService {
   error:string;
   static urlName = 'https://userpages-3fd35.firebaseio.com/admins';
   admin: string;
+  isAdmin:boolean;
 
 
   constructor(private router:Router,private afAuth:AngularFireAuth,
@@ -76,12 +75,13 @@ export class AuthService {
     return this.afAuth.authState;
   }
 
-  addAdmin(): Observable<any> {
+  addAdmin(email): Observable<any> {
     return this.http
     .get<any>(`${AuthService.urlName}.json`)
-    .pipe(map(res => {
-        console.log('res',res);
-        return res;
-    }))
+    .pipe(map(admins => {
+    
+      this.admin = admins.find((item) => item === email)
+      return this.admin? true:false;
+    }));
 }
 }

@@ -5,29 +5,45 @@ import { Pipe, PipeTransform } from '@angular/core';
     pure:false
 })
 export class FormatPipe implements PipeTransform {
-  transform(array: any, completed?:any, valueTimes?:any, checkedValue?:any, numberOfCat?:any): any {
+  transform(array: any, completed?:any, valueTimes?:any, checkedValue?:any, numberOfCat?:any,admin?:any,moderationOn?:any,myQuestion?:any,name?:any): any {
   
     let arrayCopy = [];
     arrayCopy = array;
     if(completed) {
-      arrayCopy = array.filter((item) => item.newComment?.find((elem) => elem.checked === true));
+      arrayCopy = arrayCopy.filter((item) => item.newComment?.find((elem) => elem.checked === true));
     }
     if(valueTimes === 'day') {
-      arrayCopy = array.filter((item) => new Date().getTime() - item.date < 86400000 ? true : false);
+      arrayCopy = arrayCopy.filter((item) => new Date().getTime() - item.date < 86400000 ? true : false);
     }
     if(valueTimes === 'week') {
-      arrayCopy = array.filter((item) => new Date().getTime() - item.date < 604800000 ? true : false);
+      arrayCopy = arrayCopy.filter((item) => new Date().getTime() - item.date < 604800000 ? true : false);
     }
 
     if(valueTimes === 'month') {
-      arrayCopy = array.filter((item) => new Date().getTime() - item.date < 2.628e+9 ? true : false);
-    }
-    if(valueTimes === 'all_time') {
-      arrayCopy = array;
+      arrayCopy = arrayCopy.filter((item) => new Date().getTime() - item.date < 2.628e+9 ? true : false);
     }
 
     if(checkedValue) {
-      arrayCopy = array.filter((item) => item.togs.find((elem,i) => i+1 === numberOfCat));
+      arrayCopy = arrayCopy.filter((item) => item.togs.find((elem,i) => i+1 === numberOfCat));
+      //   return numberOfCat.filter((number) => number === i + 1 ? true : false);
+      // }));
+    }
+    if(!admin) {
+      arrayCopy = arrayCopy.filter(item => {
+        if(item.approve) {
+          return true
+        }
+        else {
+          return false;
+        }
+      })
+    }
+    if(moderationOn) {
+      arrayCopy = arrayCopy.filter((item) => item.approve === false ? true:false)
+    }
+
+    if(myQuestion) {
+      arrayCopy = arrayCopy.filter((item) => item.email === name ? true:false)
     }
 
     return arrayCopy;

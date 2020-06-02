@@ -3,6 +3,7 @@ import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { QuestionService } from '../question/questions.service';
 
+
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -14,6 +15,7 @@ export class ToolbarComponent implements OnInit {
   user:firebase.User;
   isShowLogin:Boolean = true;
   isShowSignUp:Boolean = true;
+  colorInvert:boolean = this.questionService.colorApp;
 
   constructor(private authService: AuthService,
     private router: Router,
