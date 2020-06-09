@@ -14,11 +14,11 @@
                             <span *ngIf = "tog">tog{{i+1}}</span>
                         </div> 
                      </div>
-                    <button *ngIf = "showCheckbox()" (click) = "editInformation()"mat-raised-button color = "primary" [routerLink]="['../../edit']" routerLinkActive="router-link-active">Edit</button>
+                    <button *ngIf = "showCheckbox() && !question.approve" (click) = "editInformation()"mat-raised-button color = "primary" [routerLink]="['../../edit']" routerLinkActive="router-link-active">Edit</button>
                  </mat-card-actions>
-                 <div *ngIf = "admin" class="btn-question">
+                 <div *ngIf = "admin && !question?.approve" class="btn-question">
                     <button (click) = "toApprove()" mat-raised-button color = "primary">Approve</button>
-                    <button class = "btn_delete" mat-raised-button color = "primary">Delete</button>
+                    <button (click) = "deleteQuestion()"class = "btn_delete" mat-raised-button color = "primary">Delete</button>
                 </div>
              </mat-card-content>
         </mat-card>

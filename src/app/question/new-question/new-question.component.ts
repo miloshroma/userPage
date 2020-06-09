@@ -78,6 +78,7 @@ export class NewQuestionComponent implements OnInit {
       date: new Date().getTime(),
       name: this.afAuth.auth.currentUser.email,
       approve: false,
+      newComment: [],
     }
     
     if(this.form.valid && !this.togsError){

@@ -7,8 +7,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FormatPipe implements PipeTransform {
   transform(array: any, completed?:any, valueTimes?:any, checkedValue?:any, numberOfCat?:any,admin?:any,moderationOn?:any,myQuestion?:any,name?:any): any {
   
-    let arrayCopy = [];
-    arrayCopy = array;
+   
+    let arrayCopy = array || [];
     if(completed) {
       arrayCopy = arrayCopy.filter((item) => item.newComment?.find((elem) => elem.checked === true));
     }
@@ -25,25 +25,19 @@ export class FormatPipe implements PipeTransform {
 
     if(checkedValue) {
       arrayCopy = arrayCopy.filter((item) => item.togs.find((elem,i) => i+1 === numberOfCat));
-      //   return numberOfCat.filter((number) => number === i + 1 ? true : false);
-      // }));
+      // F"?
     }
+
     if(!admin) {
-      arrayCopy = arrayCopy.filter(item => {
-        if(item.approve) {
-          return true
-        }
-        else {
-          return false;
-        }
-      })
+      arrayCopy = arrayCopy.filter((item) => item.approve === true ? true : false);
     }
+
     if(moderationOn) {
-      arrayCopy = arrayCopy.filter((item) => item.approve === false ? true:false)
+      arrayCopy = arrayCopy.filter((item) => item.approve === false ? true : false)
     }
 
     if(myQuestion) {
-      arrayCopy = arrayCopy.filter((item) => item.email === name ? true:false)
+      arrayCopy = arrayCopy.filter((item) => item.name === name ? true : false)
     }
 
     return arrayCopy;

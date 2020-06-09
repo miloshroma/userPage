@@ -13,6 +13,7 @@ export interface Question {
     date:number;
     name?:string;
     approve:boolean;
+    newComment:any[];
 }
 
 export interface Comment {
@@ -45,8 +46,11 @@ export class QuestionService{
         private db:AngularFireDatabase) {
             this.questionRef = db.list(this.dbPath);
         }
+    deleteCustomer(key: string): Promise<void> {
+        return this.questionRef.remove(key);
+    }
     updateCustomer(key: string, value: any): Promise<void> {
-        return this.questionRef.update(key, value);
+        return this.db.list(`/questions/`).update(`/${key}/newComment`,value);
     }
     updateTrueComment(id:string, number:number,value: any){
         return this.db.list(`/questions/${id}/newComment/`).update(number.toString(),value);

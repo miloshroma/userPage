@@ -2,16 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../questions.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Params, ActivatedRoute } from '@angular/router';
+import { Params, ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 
-
-function User(comment, name, date, checked) {
-  this.comment = comment;
-  this.name = name; 
-  this.date = date;
-  this.checked = checked;
-}
 
 @Component({
   selector: 'app-full-question',
@@ -25,7 +18,7 @@ export class FullQuestionComponent implements OnInit {
   form:FormGroup;
   user:firebase.User;
   commentQuestion:any;
-  arrayOfComment: any[] = [];
+  arrayOfComment: any[] = [] || this.question.newComment;
   error:string;
   checked:boolean = false;
   element:any
@@ -38,6 +31,7 @@ export class FullQuestionComponent implements OnInit {
     private questionService:QuestionService,
     private afAuth:AngularFireAuth,
     private route:ActivatedRoute,
+    private router:Router,
     private authService:AuthService,) { }
 
   ngOnInit(): void {
@@ -64,12 +58,12 @@ export class FullQuestionComponent implements OnInit {
       date: this.questionService.date.getTime(),
       checked:this.checked,
     }
-    if(this.question?.newComment) {
-      this.arrayOfComment = this.question?.newComment;
+    if(this.question.newComment === undefined) {
+      this.question.newComment = [];
     }
-    this.arrayOfComment.push(/*new User(this.form.get('comments').value,this.afAuth.auth.currentUser.email,this.questionService.date.getTime(),this.checked));*/user);
-    console.log(this.arrayOfComment);
-    this.questionService.updateCustomer(this.question.id,{newComment:this.arrayOfComment})
+    this.question.newComment.push(user);
+
+    this.questionService.updateCustomer(this.question.id,this.question.newComment)
       .catch(err => this.error = err);
 
       this.form.get('comments').setValue(' ');
@@ -95,6 +89,12 @@ export class FullQuestionComponent implements OnInit {
   toApprove(){
     this.question.approve = !this.question.approve
     this.questionService.updateApproveState(this.question.id,{approve:this.question.approve});
-    console.log(this.question.approve)
+  }
+
+  deleteQuestion(){
+    this.questionService.deleteCustomer(this.question.id).then((success) => {
+      console.log('You have been successfully logged in!')
+        this.router.navigateByUrl('');
+    });
   }
 }

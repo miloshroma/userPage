@@ -27,11 +27,11 @@ export class HomePageComponent implements OnInit {
   day:boolean = false;
   completed: boolean = false;
   timeValue:string;
-  numberOfCat:number;
+  numberOfCat:boolean[] = [false,false,false];
   checkedValue:boolean = false;
   layout:boolean = false;
   admin:boolean;
-  colorInvert:boolean = false;
+  colorInvert:boolean = false || this.questionService.colorApp;
   approve:boolean = true;
   moderationOn: boolean = false;
   myQuestion: boolean = false;
@@ -69,7 +69,11 @@ export class HomePageComponent implements OnInit {
 
   onChange(event){
     this.checkedValue = event.checked;
-    this.numberOfCat = + event.source.id.split('').reverse()[0];
+    //this.numberOfCat = + event.source.id.split('').reverse()[0];
+    //this.numberOfCat.push(+ event.source.id.split('').reverse()[0]);
+    let number = + event.source.id.split('').reverse()[0];
+    this.numberOfCat.splice(number-1,1,true);
+    console.log( this.numberOfCat);
   }
   timeFilterValue(event) {
     this.timeValue = event.value;
@@ -87,6 +91,5 @@ export class HomePageComponent implements OnInit {
   myQuestionFilter() {
     this.myQuestion = !this.myQuestion;
     this.name = this.user.email;
-    console.log(this.name)
   }
 }
