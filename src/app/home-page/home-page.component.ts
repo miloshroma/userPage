@@ -27,16 +27,15 @@ export class HomePageComponent implements OnInit {
   day:boolean = false;
   completed: boolean = false;
   timeValue:string;
-  numberOfCat:boolean[] = [false,false,false];
-  checkedValue:boolean = false;
+  numberOfCat:number[] = [];
   layout:boolean = false;
   admin:boolean;
-  colorInvert:boolean = false || this.questionService.colorApp;
+  colorInvert:boolean = this.questionService.colorApp || false;
   approve:boolean = true;
   moderationOn: boolean = false;
   myQuestion: boolean = false;
   name:string;
-
+  result:number[] = [];
   constructor(private authSevice:AuthService,
     private questionService:QuestionService) { }
 
@@ -45,7 +44,7 @@ export class HomePageComponent implements OnInit {
     this.authSevice.getLoggerInUser()
     .subscribe(user => {
       this.user = user;
-      this.authSevice.addAdmin(this.user.email).subscribe((admins) => {
+      this.authSevice.addAdmin(this.user?.email).subscribe((admins) => {
         this.admin = admins;
         this.authSevice.isAdmin = admins;
       });
@@ -55,7 +54,6 @@ export class HomePageComponent implements OnInit {
      this.questions = question;
      console.log(this.questions)
     },err => console.error(err));
-
   }
 
   sortOfDate() {
@@ -68,13 +66,38 @@ export class HomePageComponent implements OnInit {
   }
 
   onChange(event){
-    this.checkedValue = event.checked;
-    //this.numberOfCat = + event.source.id.split('').reverse()[0];
-    //this.numberOfCat.push(+ event.source.id.split('').reverse()[0]);
+
     let number = + event.source.id.split('').reverse()[0];
-    this.numberOfCat.splice(number-1,1,true);
-    console.log( this.numberOfCat);
+    this.numberOfCat.push(number);
+    let count1 = 0;
+    let count2 = 0;
+    let count3 = 0;
+    this.numberOfCat.forEach(item => {
+      if(item === 1) {
+        count1++;
+      }
+      if(item === 2){
+        count2++;
+      }
+      if(item === 3){
+        count3++;
+      }
+    });
+    this.result = this.numberOfCat.filter((item, i) => {
+     
+      if(count1 % 2 === 0 && count1 !== 0 && item === 1){
+        return false;
+      }
+      if(count2 % 2 === 0 && count2 !== 0 && item === 2){
+        return false;
+      }
+      if(count3 % 2 === 0 && count3 !== 0 && item === 3){
+        return false;
+      }
+      return true;
+    });
   }
+
   timeFilterValue(event) {
     this.timeValue = event.value;
   }
@@ -84,12 +107,18 @@ export class HomePageComponent implements OnInit {
   invertColor() {
     this.colorInvert = !this.colorInvert;
     this.questionService.colorApp = this.colorInvert;
+    if(this.colorInvert) {
+      document.body.style.background = '#333'
+    }
+    if(!this.colorInvert){
+      document.body.style.background = '#fff'
+    }
   }
   moderationFilter() {
     this.moderationOn = !this.moderationOn;
   }
   myQuestionFilter() {
     this.myQuestion = !this.myQuestion;
-    this.name = this.user.email;
   }
+
 }

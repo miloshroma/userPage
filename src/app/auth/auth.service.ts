@@ -40,12 +40,10 @@ export class AuthService {
   authLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
     .then((success) => {
-        console.log('You have been successfully logged in!')
         this.router.navigateByUrl('');
     }).catch((error) => {
-      console.log(error)
       this.error = error.message;
-    })
+    });
   }
 
   logout(){
@@ -54,7 +52,6 @@ export class AuthService {
       this.router.navigateByUrl('/auth/sign-in');
     })
     .catch((error)=>{
-      console.log('Something is wrong:', error.message);
       this.error = error.message;
     });
   }

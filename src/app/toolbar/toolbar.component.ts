@@ -11,11 +11,10 @@ import { QuestionService } from '../question/questions.service';
 })
 export class ToolbarComponent implements OnInit {
 
-  click:boolean =  true || this.questionService.isShow;
+  click:boolean = true;
   user:firebase.User;
   isShowLogin:Boolean = true;
   isShowSignUp:Boolean = true;
-  colorInvert:boolean = this.questionService.colorApp;
 
   constructor(private authService: AuthService,
     private router: Router,
@@ -30,10 +29,6 @@ export class ToolbarComponent implements OnInit {
 
   logOut() {
     this.authService.logout();
-  }
-
-  isShowAddQuestion() {
-    this.click = !this.click;
   }
 
   showFormLogin() {

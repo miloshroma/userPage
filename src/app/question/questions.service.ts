@@ -32,7 +32,6 @@ export class QuestionService{
     public date:Date = new Date();
 
     question:Question;
-    isShow:boolean = true;
     id:string;
     editQuestion:any;
     colorApp:boolean = false;
@@ -62,7 +61,6 @@ export class QuestionService{
         return this.http
         .post<any>(`${QuestionService.url}.json`,question)
         .pipe(map(res => {
-            console.log('res',res);
             return {...question,id:res.name};
         }))
     }
@@ -86,7 +84,6 @@ export class QuestionService{
             return Object.keys(question).map(key => ({...question[key],id:key})).find(element => element.id == idQuestion);
         })).toPromise()
         .then(result => {
-            console.log('From Promise:', result);
             return result;
         });
     }
@@ -94,7 +91,6 @@ export class QuestionService{
         return this.http
         .get<any>(`${QuestionService.urlName}.json`)
         .pipe(map(res => {
-            console.log('res',res);
             return res;
         }))
     }

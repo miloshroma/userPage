@@ -14,15 +14,9 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class FullQuestionComponent implements OnInit {
 
   question:any;
-  index:any;
   form:FormGroup;
-  user:firebase.User;
-  commentQuestion:any;
-  arrayOfComment: any[] = [] || this.question.newComment;
   error:string;
   checked:boolean = false;
-  element:any
-  trueComment:boolean;
   admin:boolean;
   colorInherit:boolean;
 
@@ -93,8 +87,7 @@ export class FullQuestionComponent implements OnInit {
 
   deleteQuestion(){
     this.questionService.deleteCustomer(this.question.id).then((success) => {
-      console.log('You have been successfully logged in!')
-        this.router.navigateByUrl('');
+      this.router.navigateByUrl('');
     });
   }
 }

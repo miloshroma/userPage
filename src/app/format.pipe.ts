@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     pure:false
 })
 export class FormatPipe implements PipeTransform {
-  transform(array: any, completed?:any, valueTimes?:any, checkedValue?:any, numberOfCat?:any,admin?:any,moderationOn?:any,myQuestion?:any,name?:any): any {
+  transform(array: any, completed?:any, valueTimes?:any, numberOfCat?:any,admin?:any,moderationOn?:any,myQuestion?:any,name?:any): any {
   
    
     let arrayCopy = array || [];
@@ -23,13 +23,20 @@ export class FormatPipe implements PipeTransform {
       arrayCopy = arrayCopy.filter((item) => new Date().getTime() - item.date < 2.628e+9 ? true : false);
     }
 
-    if(checkedValue) {
-      arrayCopy = arrayCopy.filter((item) => item.togs.find((elem,i) => i+1 === numberOfCat));
-      // F"?
+    let result = new Set();
+    if (numberOfCat.length) {
+      arrayCopy.forEach(question => {
+        numberOfCat.forEach(filter => {
+          if (question.togs.find((elem,i) => i+1 === filter) ) {
+            result.add(question);
+          }
+        });
+      });
+      arrayCopy = result;
     }
 
     if(!admin) {
-      arrayCopy = arrayCopy.filter((item) => item.approve === true ? true : false);
+      arrayCopy = arrayCopy.filter((item) => item.approve || item.name === name);
     }
 
     if(moderationOn) {

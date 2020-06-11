@@ -56,20 +56,11 @@ export class SingInComponent implements OnInit {
 
     this.authService.signIn(data.email, data.password)
     .then(res => {
-      console.log('Successfully signed in!');
       this.router.navigateByUrl('');
-    
     })
     .catch(err => {
       this.error = err.message;
     });
-
-    // this.authService.addAdmin().subscribe((admins) => {
-    //   console.log(admins,'<-------');
-    //   this.authService.admins = admins.filter(item => item === this.form.get('email').value);
-    //   console.log( this.authService.admins);
-    // });
-
    }
    loginGoogle() {
     this.authService.googleAuth();

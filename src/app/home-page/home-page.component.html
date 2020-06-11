@@ -49,7 +49,7 @@
         </mat-card>
         <mat-card  [class.black_form] = "colorInvert">
             <mat-list [class.list] = "layout">
-                <div  [class.question] = "layout" class ="questionShow" *ngFor="let question of questions | format:completed:timeValue:checkedValue:numberOfCat:admin:moderationOn:myQuestion:name,let i = index"  [routerLink]="['full', question.id]" routerLinkActive="router-link-active">
+                <div  [class.question] = "layout" class ="questionShow" *ngFor="let question of questions | format:completed:timeValue:result:admin:moderationOn:myQuestion:user?.email,let i = index"  [routerLink]="['full', question.id]" routerLinkActive="router-link-active">
                     <mat-card>
                         <div class="data-title_question">
                             <div class="title-question">{{question.title}}</div>

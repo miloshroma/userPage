@@ -88,8 +88,5 @@ export class NewQuestionComponent implements OnInit {
       },err => console.error(err));
     }
   }
-  closeNewQuestion() {
-    this.questionService.isShow = true;
-  }
 
 }

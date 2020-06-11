@@ -62,7 +62,6 @@ export class SignUpComponent implements OnInit {
 
     this.authService.signUp(data.email,data.password)
     .then(res => {
-      console.log('Successfully signed in!');
       this.router.navigateByUrl('');
     })
     .catch(err => {
