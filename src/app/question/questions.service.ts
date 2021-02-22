@@ -41,7 +41,7 @@ export class QuestionService{
 
     questionRef: AngularFireList<Question> = null;
 
-    constructor(private http:HttpClient, private router:Router,
+    constructor(private http:HttpClient,
         private db:AngularFireDatabase) {
             this.questionRef = db.list(this.dbPath);
         }
